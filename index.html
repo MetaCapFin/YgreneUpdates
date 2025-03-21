@@ -28,9 +28,10 @@
         .form-group {
             margin-bottom: 15px;
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-               .form-group label {
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .form-group label {
             display: block;
             margin-bottom: 5px;
         }
@@ -43,6 +44,9 @@
         }
         .form-group input.full-width {
             width: 560px; /* Width of the video container */
+        }
+        .form-group input.wider {
+            width: calc(2.5 / 6 * 560px); /* Adjusted width for first and last name fields */
         }
         .form-group button {
             padding: 10px 20px;
@@ -78,13 +82,17 @@
         </div>
         <form>
             <div class="form-group">
-                <label for="first-name">First Name:</label>
-                <input type="text" id="first-name" name="first-name" required>
-                <label for="last-name">Last Name:</label>
-                <input type="text" id="last-name" name="last-name" required>
+                <div style="width: calc(2.5 / 6 * 560px);">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name" class="wider" required>
+                </div>
+                <div style="width: calc(2.5 / 6 * 560px);">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" class="wider" required>
+                </div>
             </div>
             <div class="form-group">
-                for="email">Email:</label>
+                <label for="email">Email:</label>
                 <input type="email" id="email" name="email" class="full-width" required>
             </div>
             <div class="form-group">
