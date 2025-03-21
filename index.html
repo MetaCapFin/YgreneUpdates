@@ -86,15 +86,22 @@
         }
         .name-fields {
             display: flex;
-            flex-direction: column; /* Change to column to match other fields */
-            align-items: flex-start; /* Align items to the start */
+            justify-content: space-between;
             width: 100%;
             max-width: 560px; /* Width of the video container */
             margin-bottom: 15px;
             padding-top: 20px; /* Padding from the video */
         }
-        .name-fields label, .name-fields input {
-            width: 100%; /* Full width for labels and inputs */
+        .name-fields label {
+            width: 100%; /* Full width for labels */
+            margin-bottom: 5px; /* Margin for consistency */
+        }
+        .name-fields input {
+            width: calc(50% - 10px); /* Adjusted width for first and last name fields */
+            padding: 10px; /* Padding for consistency */
+            border: 1px solid #ccc; /* Border for consistency */
+            border-radius: 4px; /* Border radius for consistency */
+            margin-bottom: 10px; /* Margin for consistency */
         }
     </style>
 </head>
@@ -107,9 +114,9 @@
         <form>
             <div class="name-fields">
                 <label for="first-name">First Name:</label>    
-                <input type="text" id="first-name" name="first-name" required>
+                <input type="text" id="first-name" name="first-name" class="half-width" required>
                 <label for="last-name">Last Name:</label>    
-                <input type="text" id="last-name" name="last-name" required>
+                <input type="text" id="last-name" name="last-name" class="half-width" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
