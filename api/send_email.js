@@ -4,17 +4,19 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { firstName, lastName, email, company, questions } = req.body;
 
+        const columnValues = JSON.stringify({
+            text_mkp8etzd: firstName,
+            text_mkp83zaw: lastName,
+            email_mkp8f725: { email: email },
+            long_text_mkp8qjwq: questions
+        });
+
         const query = `
             mutation {
                 create_item (
                     board_id: 8753908537,
                     item_name: "${company}",
-                    column_values: "{
-                        \\"text_mkp8etzd\\": \\"${firstName}\\",
-                        \\"text_mkp83zaw\\": \\"${lastName}\\",
-                        \\"email_mkp8f725\\": \\"${email}\\",
-                        \\"long_text_mkp8qjwq\\": \\"${questions}\\"
-                    }"
+                    column_values: "${columnValues}"
                 ) {
                     id
                 }
