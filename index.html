@@ -32,6 +32,11 @@
             align-items: flex-start;
             width: 100%;
         }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left; /* Align text to the left */
+        }
         .form-group input, .form-group textarea {
             width: 100%;
             max-width: 560px; /* Width of the video container */
@@ -48,6 +53,10 @@
         }
         .form-group .half-width {
             width: calc(2 / 6 * 560px); /* Adjusted width for the two boxes */
+            margin-right: 10px; /* Added margin to separate the boxes */
+        }
+        .form-group .half-width:last-child {
+            margin-right: 0; /* Remove margin for the last box */
         }
         .form-group button {
             padding: 10px 20px;
