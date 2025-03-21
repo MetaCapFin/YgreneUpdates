@@ -23,7 +23,7 @@
             border-radius: 8px;
         }
         .video {
-           px;
+            margin-bottom: 20px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -151,6 +151,8 @@
                 if (response.ok) {
                     alert('Thank you for your questions, we will be in contact ASAP.');
                 } else {
+                    const errorData = await response.json();
+                    console.error('Error:', errorData);
                     alert('There was an error submitting your form. Please try again.');
                 }
             } catch (error) {
