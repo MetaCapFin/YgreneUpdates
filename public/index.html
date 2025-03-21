@@ -14,7 +14,7 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #fff; /* Changed background color to white */
+            background-color: #fff;
         }
         .container {
             text-align: center;
@@ -23,7 +23,7 @@
             border-radius: 8px;
         }
         .video {
-            margin-bottom: 20px;
+           px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -33,12 +33,12 @@
             width: 100%;
         }
         .form-group label {
-                       margin-bottom: 5px;
-            text-align: left; /* Align text to the left */
+            margin-bottom: 5px;
+            text-align: left;
         }
         .form-group input, .form-group textarea {
             width: 100%;
-            max-width: 560px; /* Width of the video container */
+            max-width: 560px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -48,14 +48,14 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-bottom: 15px; /* Added margin to separate rows */
+            margin-bottom: 15px;
         }
         .form-group .half-width {
-            width: calc(2 / 6 * 560px); /* Adjusted width for the two boxes */
-            margin-right: 10px; /* Added margin to separate the boxes */
+            width: calc(2 / 6 * 560px);
+            margin-right: 10px;
         }
         .form-group .half-width:last-child {
-            margin-right: 0; /* Remove margin for the last box */
+            margin-right: 0;
         }
         .form-group button {
             padding: 10px 20px;
@@ -71,28 +71,28 @@
         .statement {
             margin-top: 20px;
             font-style: italic;
-            text-align: left; /* Align text to the left */
+            text-align: left;
         }
         .questions-box {
             width: 100%;
-            max-width: 560px; /* Width of the video container */
-            height: 10em; /* Initial height for the questions box */
+            max-width: 560px;
+            height: 10em;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             margin-top: 10px;
-            resize: vertical; /* Allow only vertical resizing */
+            resize: vertical;
         }
         .name-fields {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            max-width: 560px; /* Width of the video container */
+            max-width: 560px;
             margin-bottom: 15px;
-            padding-top: 20px; /* Padding from the video */
+            padding-top: 20px;
         }
         .name-fields .form-group {
-            width: calc(50% - 20px); /* Adjusted width for first and last name fields */
+            width: calc(50% - 20px);
         }
     </style>
 </head>
@@ -102,7 +102,7 @@
         <div class="video">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/your-video-id" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <form action="/api/send_email" method="post">
+        <form id="contact-form">
             <div class="name-fields">
                 <div class="form-group">
                     <label for="first-name">First Name:</label>    
@@ -132,5 +132,32 @@
             </div>
         </form>
     </div>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/api/send_email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('Thank you for your questions, we will be in contact ASAP.');
+                } else {
+                    alert('There was an error submitting your form. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again.');
+            }
+        });
+    </script>
 </body>
 </html>
