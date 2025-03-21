@@ -32,7 +32,7 @@
             align-items: flex-start;
             width: 100%;
         }
-        .form-group label {
+       -group label {
             margin-bottom: 5px;
             text-align: left;
         }
@@ -137,7 +137,13 @@
             event.preventDefault();
 
             const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
+            const data = {
+                firstName: formData.get('first-name'),
+                lastName: formData.get('last-name'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                questions: formData.get('questions')
+            };
 
             try {
                 const response = await fetch('/api/send_email', {
