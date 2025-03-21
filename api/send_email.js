@@ -5,8 +5,8 @@ export default async function handler(req, res) {
         const { firstName, lastName, email, company, questions } = req.body;
 
         const columnValues = JSON.stringify({
-            text_mkp8etzd: { firstName: firstName, text: firstName },
-            text_mkp83zaw: { firstName: lasttName, text: lasttName },
+            text_mkp8etzd: firstName,
+            text_mkp83zaw: lastName,
             email_mkp8f725: { email: email, text: email },
             long_text_mkp8qjwq: questions
         });
@@ -31,7 +31,12 @@ export default async function handler(req, res) {
 
         try {
             const response = await axios.post(url, { query }, { headers });
-            res.status(200).json({ message: 'Item created successfully!', data: response.data });
+            if (response.data.errors) {
+                console.error('Error creating item:', response.data.errors);
+                res.status(500).json({ error: 'Failed to create item.', details: response.data.errors });
+            } else {
+                res.status(200).json({ message: 'Item created successfully!', data: response.data });
+            }
         } catch (error) {
             console.error('Error creating item:', error.response ? error.response.data : error.message);
             res.status(500).json({ error: 'Failed to create item.' });
