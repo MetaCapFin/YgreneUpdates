@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         const columnValues = JSON.stringify({
             text_mkp8etzd: firstName,
             text_mkp83zaw: lastName,
-            email_mkp8f725: { email: email },
+            email_mkp8f725: email,
             long_text_mkp8qjwq: questions
         });
 
