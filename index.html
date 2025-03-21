@@ -28,8 +28,7 @@
         .form-group {
             margin-bottom: 15px;
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+                       align-items: flex-start;
             width: 100%;
         }
         .form-group label {
@@ -45,7 +44,7 @@
             margin-bottom: 10px;
         }
         .form-group input.half-width {
-            width: calc(2.5 / 6 * 560px); /* Adjusted width for first and last name fields */
+            width: calc(50% - 10px); /* Adjusted width for first and last name fields */
         }
         .form-group .row {
             display: flex;
@@ -88,11 +87,11 @@
         </div>
         <form>
             <div class="form-group row">
-                <div style="width: calc(2.5 / 6 * 560px);">
+                <div>
                     <label for="first-name">First Name:</label>
                     <input type="text" id="first-name" name="first-name" class="half-width" required>
                 </div>
-                <div style="width: calc(2.5 / 6 * 560px);">
+                <div>
                     <label for="last-name">Last Name:</label>
                     <input type="text" id="last-name" name="last-name" class="half-width" required>
                 </div>
