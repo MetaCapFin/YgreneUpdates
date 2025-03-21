@@ -5,8 +5,8 @@ export default async function handler(req, res) {
         const { firstName, lastName, email, company, questions } = req.body;
 
         let transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
+            host: 'smtp.gmail.com', // Replace with your SMTP server host
+            port: 587, // Replace with your SMTP server port
             secure: false, // true for 465, false for other ports
             auth: {
                 user: process.env.SMTP_USER,
