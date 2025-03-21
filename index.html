@@ -28,25 +28,29 @@
         .form-group {
             margin-bottom: 15px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
         }
         .form-group label {
             display: block;
             margin-bottom: 5px;
         }
         .form-group input, .form-group textarea {
-            width: calc(2.5 / 6 * 560px); /* Adjusted width for input fields */
+            width: 100%;
+            max-width: 560px; /* Width of the video container */
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             margin-bottom: 10px;
         }
-        .form-group input.full-width {
-            width: 560px; /* Width of the video container */
-        }
-        .form-group input.wider {
+        .form-group input.half-width {
             width: calc(2.5 / 6 * 560px); /* Adjusted width for first and last name fields */
+        }
+        .form-group .row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
         }
         .form-group button {
             padding: 10px 20px;
@@ -64,7 +68,8 @@
             font-style: italic;
         }
         .questions-box {
-            width: 560px; /* Width of the video container */
+            width: 100%;
+            max-width: 560px; /* Width of the video container */
             height: 10em; /* Initial height for the questions box */
             padding: 10px;
             border: 1px solid #ccc;
@@ -81,23 +86,23 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/your-video-id" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <form>
-            <div class="form-group">
-                <div style="width: calc(2.5 / 6 * 560px);">
+            <div class="form-group row">
+                <div>
                     <label for="first-name">First Name:</label>
-                    <input type="text" id="first-name" name="first-name" class="wider" required>
+                    <input type="text" id="first-name" name="first-name" class="half-width" required>
                 </div>
-                <div style="width: calc(2.5 / 6 * 560px);">
+                <div>
                     <label for="last-name">Last Name:</label>
-                    <input type="text" id="last-name" name="last-name" class="wider" required>
+                    <input type="text" id="last-name" name="last-name" class="half-width" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" class="full-width" required>
+                <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="company">Company:</label>
-                <input type="text" id="company" name="company" class="full-width" required>
+                <input type="text" id="company" name="company" required>
             </div>
             <div class="statement">
                 Please ask any further questions.
@@ -112,4 +117,3 @@
     </div>
 </body>
 </html>
-
