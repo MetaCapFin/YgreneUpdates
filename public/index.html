@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     <style>
         body {
-: Arial, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -202,7 +202,7 @@
                 dots: true,
                 infinite: true,
                 speed: 500,
-               1,
+                slidesToShow: 1,
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 2000,
@@ -230,8 +230,7 @@
                     },
                     body: JSON.stringify(data)
                 });
-
-                if (response.ok) {
+                                if (response.ok) {
                     alert('Thank you for your questions, we will be in contact ASAP.');
                 } else {
                     const errorData = await response.json();
@@ -245,4 +244,4 @@
         });
     </script>
 </body>
-</html
+</html>
