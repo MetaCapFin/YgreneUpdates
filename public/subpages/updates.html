@@ -187,19 +187,7 @@
         });
 
         document.getElementById('contact-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const formData = new FormData(event.target);
-            const data = {
-                formData.get('first-name'),
-                lastName: formData.get('last-name'),
-                email: formData.get('email'),
-                company: formData.get('company'),
-                questions: formData.get('questions')
-            };
-
-            try {
-                const response = await fetch('/api/send_email', {
+            event.preventDefault = await fetch('/api/send_email', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
