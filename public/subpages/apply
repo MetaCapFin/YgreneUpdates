@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Mulish', sans-serif;
+            color: #303C42;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fff;
+        }
+        .header {
+            background-color: #fff;
+            color: #303C42;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid transparent;
+            background-image: linear-gradient(to bottom, white, #0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 0 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .form-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 20px auto;
+            box-shadow: 5px 5px 56px 0px rgba(0,0,0,0.25);
+        }
+        .content {
+            background-color: #0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #BFD400;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #a6b800;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .header img {
+                position: static;
+                margin-bottom: 10px;
+            }
+            .header h1 {
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            .form-container {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+            }
+            h1 {
+                font-size: 1.5em;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo">
+        <h1>YgreneVIP Form Submission</h1>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <iframe src="https://forms.monday.com/forms/embed/6007973577296a1310d26d069cc48444?r=use1" width="650" height="500" style="border: 0;"></iframe>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Contact us at:</h2>
+        <p>Should you have any question about the onboarding process please contact us through:</p>
+        <p>Email: <a href="mailto:support@ygrene.vip">support@ygrene.vip</a></p>
+        <p>Phone: +17869995678</p>
+    </div>
+    <div class="button-container">
+        <a href="https://www.ygrene.vip/" class="button">Back to Lounge</a>
+    </div>
+</body>
+</html>
