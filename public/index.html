@@ -27,9 +27,44 @@
             text-align: center;
             padding: 20px;
             background-color: #fff;
-            border-radius: 8px;
+           -radius: 8px;
             width: 90%;
             max-width: 600px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .header img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .menu button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            margin: 0 10px;
+        }
+        .menu button:hover {
+            background-color: #218838;
         }
         .video {
             margin-bottom: 20px;
@@ -151,6 +186,15 @@
 </head>
 <body>
     <div class="container">
+        <div class="header">
+            <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo" />
+            <h1>YgreneVIP</h1>
+        </div>
+        <div class="menu">
+            <button onclick="window.location.href='subpages/registration.html'">Registration</button>
+            <button onclick="window.location.href='subpages/training.html'">Training</button>
+            <button onclick="window.location.href='subpages/updates.html'">Updates</button>
+        </div>
         <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo" />
         <h1>Ygrene Portal|Summitting Applications Via Text Message</h1>
         <div style="position: relative; padding-bottom: 217.19457013574663%; height: 0;">
@@ -160,7 +204,7 @@
         <br>
         <br>
         <div>
-            <p>🚨 Big News for Contractors! Submitting homeowner applications just got way easier. Ygrene’s latest update lets you send applications via text message...no email required! Whether you're in-home or on the go, this new feature will speed things up and simplify your workflow. Watch this quick video to see exactly how it works and start closing deals faster. 📲</p>
+            <p>🚨 Big News for Contractors! Submitting homeowner applications just got way easier. Ygrene’s latest update lets you send applications via text message...no email required! Whether you're in-home or on the go, this new feature will speed things up and simplify your workflow. Watch this quick video to see exactly how it works and start closing deals faster. 📲</p>
         </div>
         <br>
         <br>
@@ -217,10 +261,7 @@
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: true
-            });
-        });
-
-        document.getElementById('contact-form').addEventListener('submit', async function(event) {
+            document.getElementById('contact-form').addEventListener('submit', async function(event) {
             event.preventDefault();
 
             const formData = new FormData(event.target);
@@ -230,9 +271,7 @@
                 email: formData.get('email'),
                 company: formData.get('company'),
                 questions: formData.get('questions')
-            };
-
-            try {
+            {
                 const response = await fetch('/api/send_email', {
                     method: 'POST',
                     headers: {
@@ -240,7 +279,7 @@
                     },
                     body: JSON.stringify(data)
                 });
-                                if (response.ok) {
+                if (response.ok) {
                     alert('Thank you for your questions, we will be in contact ASAP.');
                 } else {
                     const errorData = await response.json();
