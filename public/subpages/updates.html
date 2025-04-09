@@ -168,9 +168,6 @@
         </div>
         <br>
         <br>
-        <button onclick="window.location.href='/public/index.html'">Back to the Lounge</button>
-        <br>
-        <br>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -184,27 +181,6 @@
                 slidesToScroll: 1,
                 arrows: true
             });
-        });
-
-        document.getElementById('contact-form').addEventListener('submit', async function(event) {
-            event.preventDefault = await fetch('/api/send_email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                if (response.ok) {
-                    alert('Thank you for your questions, we will be in contact ASAP.');
-                } else {
-                    const errorData = await response.json();
-                    console.error('Error:', errorData);
-                    alert('There was an error submitting your form. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error submitting your form. Please try again.');
-            }
         });
     </script>
 </body>
