@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
-
         body {
             font-family: 'Mulish', sans-serif;
             color: #303C42;
@@ -16,6 +15,26 @@
             justify-content: center;
             min-height: 100vh;
             background-color: #fff;
+        }
+        .header {
+            background-color: #fff;
+            color: #303C42;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid transparent;
+            background-image: linear-gradient(to bottom, white, #0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 0 20px;
         }
         .container {
             text-align: center;
@@ -62,6 +81,18 @@
             margin-top: 20px;
         }
         @media (max-width: 600px) {
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .header img {
+                position: static;
+                margin-bottom: 10px;
+            }
+            .header h1 {
+                padding: 0;
+            }
             .container {
                 width: 100%;
                 padding: 10px;
