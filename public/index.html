@@ -193,7 +193,7 @@
         <div class="menu">
             <button onclick="window.location.href='subpages/registration.html'">Registration</button>
             <button onclick="window.location.href='subpages/training.html'">Training</button>
-            <button onclick="window.location.href='subpages/updates.html'">Updates</button>
+            <button onclick="window.location.href='public/updates.html'">Updates</button>
         </div>
         <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo" />
         <h1>Ygrene Portal|Summitting Applications Via Text Message</h1>
@@ -261,7 +261,10 @@
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 arrows: true
-            document.getElementById('contact-form').addEventListener('submit', async function(event) {
+            });
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', async function(event) {
             event.preventDefault();
 
             const formData = new FormData(event.target);
@@ -271,7 +274,9 @@
                 email: formData.get('email'),
                 company: formData.get('company'),
                 questions: formData.get('questions')
-            {
+            };
+
+            try {
                 const response = await fetch('/api/send_email', {
                     method: 'POST',
                     headers: {
