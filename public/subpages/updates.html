@@ -168,7 +168,7 @@
         </div>
         <br>
         <br>
-        <button onclick="window.location.href='public/index.html'">Back to the Lounge</button>
+        <button onclick="window.location.href='/public/index.html'">Back to the Lounge</button>
         <br>
         <br>
     </div>
@@ -191,7 +191,7 @@
 
             const formData = new FormData(event.target);
             const data = {
-                firstName: formData.get('first-name'),
+                formData.get('first-name'),
                 lastName: formData.get('last-name'),
                 email: formData.get('email'),
                 company: formData.get('company'),
