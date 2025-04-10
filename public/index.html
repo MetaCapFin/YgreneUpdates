@@ -185,99 +185,118 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo" />
-            <h1>Ygrene VIP Lounge</h1>
-        </div>
-        <div class="menu">
-            <button onclick="window.location.href='subpages/apply.html'">Apply to join PACE</button>
-            <button onclick="window.location.href='subpages/training.html'">Registration & Training</button>
-            <button onclick="window.location.href='subpages/updates.html'">Update: SMS Registration!</button>
-            <button onclick="window.location.href='subpages/browardcounty.html'">Update: Broward County</button>
-        </div>
-        <br>
-        <br>
-        <p>Here you will be able to register for PACE program related Trainings, view Updates on everything Ygrene and apply to register for the PACE Program with Ygrene</p>
-        <p>If you have any inquiries please fill the form below and one of our team members will be in touch promptly!</p>
-        <br>
-        <form id="contact-form">
-            <div class="name-fields">
-                <div class="form-group">
-                    <label for="first-name">First Name:</label>    
-                    <input type="text" id="first-name" name="first-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name:</label>    
-                    <input type="text" id="last-name" name="last-name" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="company">Company:</label>
-                <input type="text" id="company" name="company" required>
-            </div>
-            <div class="statement">
-                Please ask any further questions.
-            </div>
-            <div class="form-group">
-                <textarea class="questions-box" name="questions" placeholder="Your questions here..."></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.slider').slick({
-                dots: true,
-                infinite: true,
-                speed: 500,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: true
-            });
-        });
+    <div class="container">
+        <div class="header">
+            <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo" />
+            <h1>Ygrene VIP Lounge</h1>
+        </div>
+        <div class="menu">
+            <button class="tab" onclick="window.location.href='subpages/apply.html'">Apply to join PACE</button>
+            <button class="tab" onclick="window.location.href='subpages/training.html'">Registration & Training</button>
+            <button class="tab" onclick="window.location.href='subpages/updates.html'">Update: SMS Registration!</button>
+            <button class="tab" onclick="window.location.href='subpages/browardcounty.html'">Update: Broward County</button>
+        </div>
+        <br>
+        <br>
+        <p>Here you will be able to register for PACE program related Trainings, view Updates on everything Ygrene and apply to register for the PACE Program with Ygrene</p>
+        <p>If you have any inquiries please fill the form below and one of our team members will be in touch promptly!</p>
+        <br>
+        <form id="contact-form">
+            <div class="name-fields">
+                <div class="form-group">
+                    <label for="first-name">First Name:</label>    
+                    <input type="text" id="first-name" name="first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name:</label>    
+                    <input type="text" id="last-name" name="last-name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company:</label>
+                <input type="text" id="company" name="company" required>
+            </div>
+            <div class="statement">
+                Please ask any further questions.
+            </div>
+            <div class="form-group">
+                <textarea class="questions-box" name="questions" placeholder="Your questions here..."></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                });
+        });
 
-        document.getElementById('contact-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
+        document.getElementById('contact-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-            const formData = new FormData(event.target);
-            const data = {
-                firstName: formData.get('first-name'),
-                lastName: formData.get('last-name'),
-                email: formData.get('email'),
-                company: formData.get('company'),
-                questions: formData.get('questions')
-            };
+            const formData = new FormData(event.target);
+            const data = {
+                firstName: formData.get('first-name'),
+                lastName: formData.get('last-name'),
+                email: formData.get('email'),
+                company: formData.get('company'),
+                questions: formData.get('questions')
+            };
 
-            try {
-                const response = await fetch('/api/send_email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                if (response.ok) {
-                    alert('Thank you for your questions, we will be in contact ASAP.');
-                } else {
-                    const errorData = await response.json();
-                    console.error('Error:', errorData);
-                    alert('There was an error submitting your form. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error submitting your form. Please try again.');
-            }
-        });
-    </script>
+            try {
+                const response = await fetch('/api/send_email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    alert('Thank you for your questions, we will be in contact ASAP.');
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error:', errorData);
+                    alert('There was an error submitting your form. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('There was an error submitting your form. Please try again.');
+            }
+        });
+    </script>
+    <style>
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid #ccc;
+        }
+        .tab {
+            background-color: #f1f1f1;
+            border: none;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tab:hover {
+            background-color: #ddd;
+        }
+        .tab:focus {
+            background-color: #ccc;
+        }
+    </style>
 </body>
 </html>
