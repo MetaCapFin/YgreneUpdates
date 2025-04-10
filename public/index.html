@@ -242,7 +242,9 @@
                 infinite: true,
                 speed: 500,
                 slidesToShow: 1,
-                });
+                slidesToScroll: 1,
+                arrows: true
+            });
         });
 
         document.getElementById('contact-form').addEventListener('submit', async function(event) {
@@ -290,6 +292,9 @@
             padding: 14px 20px;
             cursor: pointer;
             transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            margin: 0;
         }
         .tab:hover {
             background-color: #ddd;
