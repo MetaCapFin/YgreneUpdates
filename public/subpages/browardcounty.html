@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
+        body {
+            font-family: 'Mulish', sans-serif;
+            color: #303C42;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #fff;
+        }
+        .header {
+            background-color: #fff;
+            color: #303C42;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid transparent;
+            background-image: linear-gradient(to bottom, white, #0);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header img {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 0 20px;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .slider {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .slider img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .content {
+            background-color: #0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #BFD400;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #a6b800;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .header img {
+                position: static;
+                margin-bottom: 10px;
+            }
+            .header h1 {
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            .slider img {
+                max-width: 100%;
+                height: auto;
+            }
+            h1 {
+                font-size: 1.5em;
+                margin: 10px 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" alt="Logo" />
+            <h1>Ygrene Updates & News</h1>
+        </div>
+        <div style="position: relative; padding-bottom: 217.19457013574663%; height: 0;">
+            <iframe title="vimeo-player" src="https://player.vimeo.com/video/1070510050?h=45157d3455" width="640" height="360" frameborder="0"    allowfullscreen></iframe>
+        </div>
+        <p>🚨 Ygrene | BBroward County: New Task "Price Disclosure Form". Y</p>
+        <div class="slider">
+            <div><img src="https://github.com/MetaCapFin/YgreneUpdates/blob/main/public/Slide1.jpg?raw=true" alt="Slide 1"></div>
+            <div><img src="https://github.com/MetaCapFin/YgreneUpdates/blob/main/public/Slide2.jpg?raw=true" alt="Slide 2"></div>
+            <div><img src="https://github.com/MetaCapFin/YgreneUpdates/blob/main/public/Slide3.jpg?raw=true" alt="Slide 3"></div>
+            <div><img src="https://github.com/MetaCapFin/YgreneUpdates/blob/main/public/Slide4.jpg?raw=true" alt="Slide 4"></div>
+            <div><img src="https://github.com/MetaCapFin/YgreneUpdates/blob/main/public/Slide5.jpg?raw=true" alt="Slide 5"></div>
+            <div><img src="https://github.com/MetaCapFin/YgreneUpdates/blob/main/public/Slide6.jpg?raw=true" alt="Slide 6"></div>      
+        </div>
+    </div>
+    <div class="content">
+        <h2>Contact us at:</h2>
+        <p>Should you have any question about the onboarding process please contact us through:</p>
+        <p>Email: <a href="mailto:support@ygrene.vip">support@ygrene.vip</a></p>
+        <p>Phone: +17867568940</p>
+    </div>
+    <div class="button-container">
+        <a href="https://www.ygrene.vip/" class="button">Back to Lounge</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true
+            });
+        });
+    </script>
+</body>
+</html>
