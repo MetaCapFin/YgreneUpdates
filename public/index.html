@@ -12,196 +12,193 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
-body {
-    font-family: 'Mulish', sans-serif;
-    color: #303C42;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    center;
-    min-height: 100vh;
-    background-color: #fff;
-}
-.container {
-    text-align: left;
-    justify-content: center;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    max-width: 1000px;
-    width: 100%; /* Ensure container takes full width on mobile */
-}
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-}
-.header img {
-    max-width: 100px;
-    margin-right: -150px;
-}
-.header h1 {
-    margin: 0;
-    text-align: center;
-    width: 100%;
-}
-.menu {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-}
-.menu button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #BFD400;
-    color: #303C42;
-    border: none;
-    width: 150px; /* Set a fixed width for uniform button size */
-    height: 70px; /* Set a fixed height for uniform button size */
-    font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0; /* Make edges straight */
-}
-.menu button:hover {
-    background-color: #a6b800;
-}
-.menu button + button {
-    margin-left: 0; /* Remove separation between buttons */
-}
-.slider {
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-}
-.slider img {
-    width: 100%;
-    border-radius: 8px;
-}
-.form-group {
-    margin-bottom: 10px; /* Reduce the margin to make fields closer */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-label {
-    margin-bottom: 5px;
-    text-align: left;
-}
-.form-group input, .form-group textarea {
-    width: 100%;
-    max-width: 560px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 5px; /* Reduce the margin to make fields closer */
-}
-.form-group .row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px; /* Reduce the margin to make fields closer */
-}
-.form-group .half-width {
-    width: calc(50% - 5px); /* Adjust width to ensure combined width matches email field */
-    margin-right: 5px; /* Adjust margin to ensure combined width matches email field */
-}
-.form-group .half-width:last-child {
-    margin-right: 0;
-}
-.form-group button {
-    padding: 10px 20px;
-    background-color: #BFD400;
-    color: #303C42;
-    border: none;
-    cursor: pointer;
-    align-self: center;
-    font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0; /* Make edges straight */
-}
-.form-group button:hover {
-    background-color: #a6b800;
-}
-.statement {
-    margin-top: 20px;
-    font-style: italic;
-    text-align: center;
-}
-.questions-box {
-    width: 100%;
-    max-width: 560px;
-    height: 10em;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 10px;
-    resize: vertical;
-    align-items: center;
-}
-.name-fields {
-    display:
-    justify-content: center;
-    max-width: 1020px;
-    margin-bottom: 10px; /* Reduce the margin to make fields closer */
-    padding-top: 20px;
-    align-items: center;
-}
-
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
-    .header img {
-        margin-right: 0; /* Adjust image margin for mobile */
-    }
-    .form-group input, .form-group textarea, .questions-box {
-        max-width: 100%;
-    }
-    .name-fields {
-        flex-direction: column;
-        align-items: center;
-    }
-    .name-fields .form-group {
-        width: 50%;
-        margin-bottom: 10px;
-    }
-    .form-group .row {
-        flex-direction: column;
-        align-items: center;
-    }
-    .form-group .half-width {
-        width: calc(50% - 5px); /* Adjust width to ensure combined width matches email field */
-        margin-right: 5px; /* Adjust margin to ensure combined width matches email field */
-    }
-    .form-group button {
-        width: 100%;
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-    h1 {
-        font-size: 1.5em;
-        margin: 10px 0;
-    }
-}
-
-</style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
+        body {
+            font-family: 'Mulish', sans-serif;
+            color: #303C42;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fff;
+        }
+        .container {
+            text-align: left;
+            justify-content: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            max-width: 1000px;
+            width: 100%; /* Ensure container takes full width on mobile */
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .header img {
+            max-width: 100px;
+            margin-right: -150px;
+        }
+        .header h1 {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+        .menu button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #BFD400;
+            color: #303C42;
+            border: none;
+            width: 150px; /* Set a fixed width for uniform button size */
+            height: 70px; /* Set a fixed height for uniform button size */
+            font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0; /* Make edges straight */
+        }
+        .menu button:hover {
+            background-color: #a6b800;
+        }
+        .menu button + button {
+            margin-left: 0; /* Remove separation between buttons */
+        }
+        .slider {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .slider img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 10px; /* Reduce the margin to make fields closer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        label {
+            margin-bottom: 5px;
+            text-align: left;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            max-width: 560px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 5px; /* Reduce the margin to make fields closer */
+        }
+        .form-group .row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px; /* Reduce the margin to make fields closer */
+        }
+        .form-group .half-width {
+            width: calc(50% - 5px); /* Adjust width to ensure combined width matches email field */
+            margin-right: 5px; /* Adjust margin to ensure combined width matches email field */
+        }
+        .form-group .half-width:last-child {
+            margin-right: 0;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #BFD400;
+            color: #303C42;
+            border: none;
+            cursor: pointer;
+            align-self: center;
+            font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0; /* Make edges straight */
+        }
+        .form-group button:hover {
+            background-color: #a6b800;
+        }
+        .statement {
+            margin-top: 20px;
+            font-style: italic;
+            text-align: center;
+        }
+        .questions-box {
+            width: 100%;
+            max-width: 560px;
+            height: 10em;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            resize: vertical;
+            align-items: center;
+        }
+        .name-fields {
+            display:
+            justify-content: center;
+            max-width: 1020px;
+            margin-bottom: 10px; /* Reduce the margin to make fields closer */
+            padding-top: 20px;
+            align-items: center;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            .header img {
+                margin-right: 0; /* Adjust image margin for mobile */
+            }
+            .form-group input, .form-group textarea, .questions-box {
+                max-width: 100%;
+            }
+            .name-fields {
+                flex-direction: column;
+                align-items: center;
+            }
+            .name-fields .form-group {
+                width: 50%;
+                margin-bottom: 10px;
+            }
+            .form-group .row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .form-group .half-width {
+                width: calc(50% - 5px); /* Adjust width to ensure combined width matches email field */
+                margin-right: 5px; /* Adjust margin to ensure combined width matches email field */
+            }
+            .form-group button {
+                width: 100%;
+            }
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            h1 {
+                font-size: 1.5em;
+                margin: 10px 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
