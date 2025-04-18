@@ -52,33 +52,34 @@
         text-align: center;
         width: 100%;
     }
-    .menu {
-        display: flex;
-        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-        justify-content: center; /* Center the buttons */
-    }
-    .menu button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        background-color: #BFD400;
-        color: #303C42;
-        border: none;
-        width: 150px; /* Set a fixed width for uniform button size */
-        height: 70px; /* Set a fixed height for uniform button size */
-        font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0; /* Make edges straight */
-        margin: 5px; /* Add some margin for spacing */
-    }
-    .menu button:hover {
-        background-color: #a6b800;
-    }
-    .menu button + button {
-        margin-left: 0; /* Remove separation between buttons */
-    }
+ 
+.menu {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: flex-start; /* Align buttons to the left */
+}
+
+.menu button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #BFD400;
+    color: #303C42;
+    border: none;
+    width: 150px; /* Set a fixed width for uniform button size */
+    height: 70px; /* Set a fixed height for uniform button size */
+    font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0; /* Make edges straight */
+    margin: 5px; /* Add some margin for spacing */
+}
+
+.menu button:hover {
+    background-color: #a6b800;
+}
+
     .slider {
         width: 100%;
         max-width: 600px;
