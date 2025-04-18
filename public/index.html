@@ -12,7 +12,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap">
-   body, .container {
+<style>
+body, .container {
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 body {
@@ -35,6 +36,129 @@ body {
     max-width: 1000px;
     width: 100%;
 }
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+}
+.header img {
+    max-width: 100px;
+    margin-right: -150px;
+}
+.header h1 {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+.menu {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+.menu button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #BFD400;
+    color: #303C42;
+    border: none;
+    width: 150px;
+    height: 70px;
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+}
+.menu button:hover {
+    background-color: #a6b800;
+}
+.slider {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+.slider img {
+    width: 100%;
+    border-radius: 8px;
+}
+.form-group {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+label {
+    margin-bottom: 5px;
+    text-align: left;
+}
+.form-group input, .form-group textarea {
+    width: 100%;
+    max-width: 560px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+.form-group .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.form-group .half-width {
+    width: calc(50% - 5px);
+    margin-right: 5px;
+}
+.form-group .half-width:last-child {
+    margin-right: 0;
+}
+.form-group button {
+    padding: 10px 20px;
+    background-color: #BFD400;
+    color: #303C42;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+    font-family: 'Mulish', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+}
+.form-group button:hover {
+    background-color: #a6b800;
+}
+.statement {
+    margin-top: 20px;
+    font-style: italic;
+    text-align: center;
+}
+.questions-box {
+    width: 100%;
+    max-width: 560px;
+    height: 10em;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 10px;
+    resize: vertical;
+    align-items: center;
+}
+.name-fields {
+    display: flex;
+    justify-content: center;
+    max-width: 1020px;
+    margin-bottom: 10px;
+    padding-top: 20px;
+    align-items: center;
+}
+
 @media (max-width: 600px) {
     .container {
         width: 100%;
@@ -43,8 +167,38 @@ body {
     .header img {
         margin-right: 0; /* Adjust image margin for mobile */
     }
+    .form-group input, .form-group textarea, .questions-box {
+        max-width: 100%; /* Ensure form elements fit within viewport */
+    }
+    .name-fields {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center;
+    }
+    .name-fields .form-group {
+        width: 100%; /* Ensure full width for name fields */
+        margin-bottom: 10px;
+    }
+    .form-group .row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .form-group .half-width {
+        width: 100%; /* Ensure full width for name fields */
+        margin-right: 0;
+    }
+    .form-group button {
+        width: 100%;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    h1 {
+        font-size: 1.5em;
+        margin: 10px 0;
+    }
 }
-
+</style>
 </head>
 <body>
     <div class="container">
