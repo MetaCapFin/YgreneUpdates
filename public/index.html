@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap">
    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
     body {
         font-family: 'Mulish', sans-serif;
         color: #303C42;
@@ -22,7 +21,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        center;
         min-height: 100vh;
         background-color: #fff;
     }
@@ -33,7 +31,7 @@
         background-color: #fff;
         border-radius: 8px;
         max-width: 1000px;
-        width: 100%; /* Ensure container takes full width on mobile */
+        width: 100%;
     }
     .header {
         display: flex;
@@ -56,7 +54,7 @@
         display: flex;
         justify-content: center;
         margin: 20px 0;
-        flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        flex-wrap: wrap;
     }
     .menu button {
         padding: 10px 20px;
@@ -65,19 +63,16 @@
         background-color: #BFD400;
         color: #303C42;
         border: none;
-        width: 150px; /* Set a fixed width for uniform button size */
-        height: 70px; /* Set a fixed height for uniform button size */
-        font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
+        width: 150px;
+        height: 70px;
+        font-family: 'Mulish', sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0; /* Make edges straight */
+        border-radius: 0;
     }
     .menu button:hover {
         background-color: #a6b800;
-    }
-    .menu button + button {
-        margin-left: 0; /* Remove separation between buttons */
     }
     .slider {
         width: 100%;
@@ -89,7 +84,7 @@
         border-radius: 8px;
     }
     .form-group {
-        margin-bottom: 10px; /* Reduce the margin to make fields closer */
+        margin-bottom: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -105,17 +100,17 @@
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 4px;
-        margin-bottom: 5px; /* Reduce the margin to make fields closer */
+        margin-bottom: 5px;
     }
     .form-group .row {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        margin-bottom: 10px; /* Reduce the margin to make fields closer */
+        margin-bottom: 10px;
     }
     .form-group .half-width {
-        width: calc(50% - 5px); /* Adjust width to ensure combined width matches email field */
-        margin-right: 5px; /* Adjust margin to ensure combined width matches email field */
+        width: calc(50% - 5px);
+        margin-right: 5px;
     }
     .form-group .half-width:last-child {
         margin-right: 0;
@@ -127,11 +122,11 @@
         border: none;
         cursor: pointer;
         align-self: center;
-        font-family: 'Mulish', sans-serif; /* Apply Mulish font to buttons */
+        font-family: 'Mulish', sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0; /* Make edges straight */
+        border-radius: 0;
     }
     .form-group button:hover {
         background-color: #a6b800;
@@ -153,10 +148,10 @@
         align-items: center;
     }
     .name-fields {
-        display: flex; /* Correct display property */
+        display: flex;
         justify-content: center;
         max-width: 1020px;
-        margin-bottom: 10px; /* Reduce the margin to make fields closer */
+        margin-bottom: 10px;
         padding-top: 20px;
         align-items: center;
     }
@@ -164,10 +159,10 @@
     @media (max-width: 600px) {
         .container {
             width: 100%;
-            padding: 10px; /* Adjust padding for mobile */
+            padding: 10px;
         }
         .header img {
-            margin-right: 0; /* Adjust image margin for mobile */
+            margin-right: 0;
         }
         .form-group input, .form-group textarea, .questions-box {
             max-width: 100%;
@@ -177,7 +172,7 @@
             align-items: center;
         }
         .name-fields .form-group {
-            width: 100%; /* Ensure full width for name fields */
+            width: 100%;
             margin-bottom: 10px;
         }
         .form-group .row {
@@ -185,7 +180,7 @@
             align-items: center;
         }
         .form-group .half-width {
-            width: 100%; /* Ensure full width for name fields */
+            width: 100%;
             margin-right: 0;
         }
         .form-group button {
@@ -263,7 +258,6 @@
                 arrows: true
             });
         });
-
         document.getElementById('contact-form').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -298,4 +292,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
