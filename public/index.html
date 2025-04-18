@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap">
-    <style>
+   <style>
     @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap');
     body {
         font-family: 'Mulish', sans-serif;
@@ -153,7 +153,7 @@
         align-items: center;
     }
     .name-fields {
-        display: flex
+        display: flex; /* Correct display property */
         justify-content: center;
         max-width: 1020px;
         margin-bottom: 10px; /* Reduce the margin to make fields closer */
@@ -164,7 +164,7 @@
     @media (max-width: 600px) {
         .container {
             width: 100%;
-            padding: 10px;
+            padding: 10px; /* Adjust padding for mobile */
         }
         .header img {
             margin-right: 0; /* Adjust image margin for mobile */
@@ -177,7 +177,7 @@
             align-items: center;
         }
         .name-fields .form-group {
-            width: 100%;
+            width: 100%; /* Ensure full width for name fields */
             margin-bottom: 10px;
         }
         .form-group .row {
@@ -185,8 +185,8 @@
             align-items: center;
         }
         .form-group .half-width {
-            width: 100%; /* Adjust width to ensure combined width matches email field */
-            margin-right: 0px; /* Adjust margin to ensure combined width matches email field */
+            width: 100%; /* Ensure full width for name fields */
+            margin-right: 0;
         }
         .form-group button {
             width: 100%;
