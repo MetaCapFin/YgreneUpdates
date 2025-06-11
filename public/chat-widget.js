@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatContainer = document.createElement("div");
   chatContainer.id = "chat-widget-container";
   chatContainer.innerHTML = `
-    <div class="chat-header">🤖 Chat with CieloBot</div>
+    <div class="chat-header">🤖 Chat with VYP-Bot</div>
     <div id="chat-messages" class="chat-messages"></div>
     <form id="chat-form" class="chat-input-area">
       <input type="text" id="chat-input" class="chat-input" placeholder="Type your message..." required />
