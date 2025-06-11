@@ -5,11 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chat with TuCielo</title>
   <link rel="stylesheet" href="/chat-widget.css" />
+  <style>
+    .back-to-main {
+      padding: 10px 20px;
+      background-color: #BFD400;
+      color: #303C42;
+      border: none;
+      cursor: pointer;
+      font-family: 'Mulish', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      margin: 30px auto;
+    }
+  </style>
 </head>
 <body>
-  <div id="chat-widget-container"></div>
+  <div id="chat-widget"></div>
+
+  <div style="text-align: center;">
+    <button class="back-to-main" onclick="window.location.href='/'">
+      ← Back to Main Page
+    </button>
+  </div>
 
   <script src="/chat-widget.js"></script>
 </body>
 </html>
+
 
