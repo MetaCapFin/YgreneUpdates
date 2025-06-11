@@ -1,67 +1,60 @@
 // public/chat-widget.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  const chatButton = document.createElement("button");
-  chatButton.innerText = "💬 Chat";
-  chatButton.id = "chat-toggle-button";
-  document.body.appendChild(chatButton);
+  // Clear entire body content
+  document.body.innerHTML = '';
 
+  // Create main container
   const chatContainer = document.createElement("div");
-  chatContainer.id = "chat-widget";
+  chatContainer.id = "chat-widget-container";
   chatContainer.innerHTML = `
-    <div id="chat-header">Chatbot <span id="close-chat">✖</span></div>
-    <div id="chat-messages"></div>
-    <form id="chat-form">
-      <input type="text" id="chat-input" placeholder="Say something..." required />
-      <button type="submit">Send</button>
+    <div class="chat-header">🤖 Chat with CieloBot</div>
+    <div id="chat-messages" class="chat-messages"></div>
+    <form id="chat-form" class="chat-input-area">
+      <input type="text" id="chat-input" class="chat-input" placeholder="Type your message..." required />
+      <button type="submit" class="chat-submit">Send</button>
     </form>
   `;
   document.body.appendChild(chatContainer);
 
-  const toggleButton = document.getElementById("chat-toggle-button");
-  const closeButton = chatContainer.querySelector("#close-chat");
-  const chatForm = chatContainer.querySelector("#chat-form");
-  const chatInput = chatContainer.querySelector("#chat-input");
-  const chatMessages = chatContainer.querySelector("#chat-messages");
-
-  toggleButton.onclick = () => {
-    chatContainer.style.display = "block";
-    toggleButton.style.display = "none";
-  };
-
-  closeButton.onclick = () => {
-    chatContainer.style.display = "none";
-    toggleButton.style.display = "block";
-  };
+  const chatForm = document.getElementById("chat-form");
+  const chatInput = document.getElementById("chat-input");
+  const chatMessages = document.getElementById("chat-messages");
 
   const appendMessage = (text, sender) => {
     const msg = document.createElement("div");
     msg.className = `chat-message ${sender}`;
-    msg.innerText = text;
+    msg.textContent = text;
     chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   };
 
-  chatForm.onsubmit = async (e) => {
-    e.preventDefault();
-    const userInput = chatInput.value.trim();
-    if (!userInput) return;
-    appendMessage(userInput, "user");
+  const sendMessage = async (text) => {
+    appendMessage(text, "user");
     chatInput.value = "";
-
     appendMessage("...", "bot");
 
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput }),
+        body: JSON.stringify({ message: text }),
       });
 
       const data = await response.json();
-      chatMessages.lastChild.innerText = data.reply || "(no response)";
+      chatMessages.lastChild.textContent = data.reply || "(no response)";
     } catch (err) {
-      chatMessages.lastChild.innerText = "Error talking to bot.";
+      chatMessages.lastChild.textContent = "Error talking to bot.";
     }
   };
+
+  chatForm.onsubmit = (e) => {
+    e.preventDefault();
+    const userInput = chatInput.value.trim();
+    if (!userInput) return;
+    sendMessage(userInput);
+  };
+
+  // Initial bot welcome message
+  appendMessage("Hi! I'm CieloBot 🌤️ — how can I help you today?", "bot");
 });
