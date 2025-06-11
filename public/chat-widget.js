@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   };
 
-  // Show welcome message
+  // Initial welcome message
   appendMessage(
     "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
     "bot"
@@ -40,16 +40,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!userName) {
       userName = userInput;
-      appendMessage(`Nice to meet you, ${userName}! How can I assist you today?`, "bot");
-    } else {
-      // Simple canned responses for now
-      let botReply = `Thanks for your message, ${userName}. I'm still learning!`;
-
-      if (userInput.toLowerCase().includes("ygrene")) {
-        botReply = `${userName}, Ygrene offers financing for energy efficiency and resiliency improvements. What would you like to know about?`;
-      }
-
-      appendMessage(botReply, "bot");
+      appendMessage(`Nice to meet you, ${userName}! How can I help you today?`, "bot");
+      return;
     }
+
+    // Basic canned response logic
+    let response = `Thanks for your message, ${userName}. I'm here to help you with Ygrene.`;
+
+    if (userInput.toLowerCase().includes("what is ygrene")) {
+      response = "Ygrene provides financing for energy-efficient and storm-resilient home improvements. Would you like to know what projects are eligible?";
+    } else if (userInput.toLowerCase().includes("how do i apply")) {
+      response = "You can apply online through the Ygrene portal. I can help guide you through it step by step.";
+    }
+
+    appendMessage(response, "bot");
   };
 });
