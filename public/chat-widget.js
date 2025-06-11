@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   };
 
-  // Initial welcome message
   appendMessage(
     "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
     "bot"
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Basic canned response logic
     let response = `Thanks for your message, ${userName}. I'm here to help you with Ygrene.`;
 
     if (userInput.toLowerCase().includes("what is ygrene")) {
