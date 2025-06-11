@@ -6,32 +6,65 @@
   <title>Chat with TuCielo</title>
   <link rel="stylesheet" href="/chat-widget.css" />
   <style>
-    .back-to-main {
-      padding: 10px 20px;
-      background-color: #BFD400;
-      color: #303C42;
-      border: none;
-      cursor: pointer;
-      font-family: 'Mulish', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0;
-      margin: 30px auto;
+    /* Inline style to ensure full height layout takes effect before CSS loads */
+    html, body {
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <div id="chat-widget"></div>
-
-  <div style="text-align: center;">
+  <div id="chat-widget-container">
+    <div class="chat-header">Chatbot</div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <form class="chat-input-area" id="chat-form">
+      <input
+        type="text"
+        id="chat-input"
+        class="chat-input"
+        placeholder="Say something..."
+        required
+      />
+      <button type="submit" class="chat-submit">Send</button>
+    </form>
     <button class="back-to-main" onclick="window.location.href='/'">
       ← Back to Main Page
     </button>
   </div>
 
-  <script src="/chat-widget.js"></script>
+  <script>
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("chat-input");
+    const messages = document.getElementById("chat-messages");
+
+    const appendMessage = (text, sender) => {
+      const msg = document.createElement("div");
+      msg.className = `chat-message ${sender}`;
+      msg.innerText = text;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    };
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const userInput = input.value.trim();
+      if (!userInput) return;
+      appendMessage(userInput, "user");
+      input.value = "";
+      appendMessage("...", "bot");
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userInput }),
+        });
+
+        const data = await response.json();
+        messages.lastChild.innerText = data.reply || "(no response)";
+      } catch (err) {
+        messages.lastChild.innerText = "Error talking to bot.";
+      }
+    };
+  </script>
 </body>
 </html>
-
-
