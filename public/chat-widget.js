@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatContainer = document.getElementById("chat-widget");
 
   chatContainer.innerHTML = `
-    <div id="chat-header">Chatbot</div>
+    <div id="chat-header">VYP-Chatbot</div>
     <div id="chat-messages"></div>
     <form id="chat-form">
       <input type="text" id="chat-input" placeholder="Say something..." required />
