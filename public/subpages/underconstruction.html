@@ -6,9 +6,23 @@
   <title>Chat with TuCielo</title>
   <link rel="stylesheet" href="/chat-widget.css" />
   <style>
-    /* Inline style to ensure full height layout takes effect before CSS loads */
     html, body {
       height: 100%;
+    }
+
+    .back-to-main {
+      padding: 10px 20px;
+      background-color: #BFD400;
+      color: #303C42;
+      border: none;
+      cursor: pointer;
+      font-family: 'Mulish', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      margin-top: 20px;
+      align-self: center;
     }
   </style>
 </head>
@@ -36,6 +50,8 @@
     const input = document.getElementById("chat-input");
     const messages = document.getElementById("chat-messages");
 
+    let userName = null;
+
     const appendMessage = (text, sender) => {
       const msg = document.createElement("div");
       msg.className = `chat-message ${sender}`;
@@ -44,26 +60,37 @@
       messages.scrollTop = messages.scrollHeight;
     };
 
-    form.onsubmit = async (e) => {
+    // Show initial welcome message
+    appendMessage(
+      "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
+      "bot"
+    );
+
+    form.onsubmit = (e) => {
       e.preventDefault();
       const userInput = input.value.trim();
       if (!userInput) return;
+
       appendMessage(userInput, "user");
       input.value = "";
-      appendMessage("...", "bot");
 
-      try {
-        const response = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: userInput }),
-        });
-
-        const data = await response.json();
-        messages.lastChild.innerText = data.reply || "(no response)";
-      } catch (err) {
-        messages.lastChild.innerText = "Error talking to bot.";
+      if (!userName) {
+        userName = userInput;
+        appendMessage(`Nice to meet you, ${userName}! How can I help you today?`, "bot");
+        return;
       }
+
+      // Simple example logic
+      const lower = userInput.toLowerCase();
+      let response = `Thanks for your message, ${userName}. I'm here to help with anything related to Ygrene!`;
+
+      if (lower.includes("ygrene")) {
+        response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements.";
+      } else if (lower.includes("apply")) {
+        response = `You can apply through Ygrene’s website. Would you like me to guide you through the process, ${userName}?`;
+      }
+
+      appendMessage(response, "bot");
     };
   </script>
 </body>
