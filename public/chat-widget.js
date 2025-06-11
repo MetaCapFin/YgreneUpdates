@@ -1,14 +1,12 @@
-// public/chat-widget.js
-
 document.addEventListener("DOMContentLoaded", () => {
   const chatContainer = document.getElementById("chat-widget");
 
   chatContainer.innerHTML = `
     <div id="chat-header">Chatbot</div>
-    <div id="chat-messages"></div>
-    <form id="chat-form">
-      <input type="text" id="chat-input" placeholder="Say something..." required />
-      <button type="submit">Send</button>
+    <div id="chat-messages" class="chat-messages"></div>
+    <form id="chat-form" class="chat-input-area">
+      <input type="text" id="chat-input" class="chat-input" placeholder="Say something..." required />
+      <button type="submit" class="chat-submit">Send</button>
     </form>
   `;
 
@@ -26,43 +24,32 @@ document.addEventListener("DOMContentLoaded", () => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   };
 
-  // Show welcome message when chatbot loads
+  // Show welcome message
   appendMessage(
-    "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person, what is your name?",
+    "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
     "bot"
   );
 
-  chatForm.onsubmit = async (e) => {
+  chatForm.onsubmit = (e) => {
     e.preventDefault();
     const userInput = chatInput.value.trim();
     if (!userInput) return;
+
     appendMessage(userInput, "user");
     chatInput.value = "";
 
-    appendMessage("...", "bot");
-
-    // Handle name capture on first input
     if (!userName) {
       userName = userInput;
-      chatMessages.lastChild.innerText = `Nice to meet you, ${userName}! How can I assist you today?`;
-      return;
-    }
+      appendMessage(`Nice to meet you, ${userName}! How can I assist you today?`, "bot");
+    } else {
+      // Simple canned responses for now
+      let botReply = `Thanks for your message, ${userName}. I'm still learning!`;
 
-    // Send message to backend chatbot API
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput }),
-      });
+      if (userInput.toLowerCase().includes("ygrene")) {
+        botReply = `${userName}, Ygrene offers financing for energy efficiency and resiliency improvements. What would you like to know about?`;
+      }
 
-      const data = await response.json();
-      chatMessages.lastChild.innerText = data.reply
-        ? data.reply.replaceAll("{{name}}", userName)
-        : "(no response)";
-    } catch (err) {
-      chatMessages.lastChild.innerText = "Error talking to bot.";
+      appendMessage(botReply, "bot");
     }
   };
 });
-
