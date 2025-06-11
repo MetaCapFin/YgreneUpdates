@@ -24,6 +24,18 @@
       margin-top: 20px;
       align-self: center;
     }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
   </style>
 
   <!-- Open Graph Metadata -->
@@ -61,19 +73,27 @@
 
     let userName = null;
 
-    const appendMessage = (text, sender) => {
+    const appendMessage = (text, sender, withFade = false) => {
       const msg = document.createElement("div");
       msg.className = `chat-message ${sender}`;
       msg.innerText = text;
+      if (withFade) {
+        msg.classList.add("fade-in");
+      }
       messages.appendChild(msg);
       messages.scrollTop = messages.scrollHeight;
     };
 
-    // Show initial welcome message
-    appendMessage(
-      "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
-      "bot"
-    );
+    // Show welcome message 1 second after load with fade-in
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        appendMessage(
+          "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
+          "bot",
+          true
+        );
+      }, 1000);
+    });
 
     form.onsubmit = (e) => {
       e.preventDefault();
@@ -89,7 +109,6 @@
         return;
       }
 
-      // Simple example logic
       const lower = userInput.toLowerCase();
       let response = `Thanks for your message, ${userName}. I'm here to help with anything related to Ygrene!`;
 
@@ -104,3 +123,4 @@
   </script>
 </body>
 </html>
+
