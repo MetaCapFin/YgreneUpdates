@@ -14,21 +14,24 @@ export default async function handler(req, res) {
   const boardId = 9365290800;
   const itemName = fullName;
 
-  // ✅ Correct JSON format for the phone column
+  const formattedPhone = {
+    phone: `+1${phone.replace(/\D/g, '').slice(-10)}`,
+    countryShortName: 'US'
+  };
+
   const columnValues = {
-    phone_mkrvn3jx: {
-      phone: "+1" + phone.replace(/\D/g, '').slice(-10),
-      countryShortName: "us"
-    },
+    phone_mkrvn3jx: formattedPhone,
     email_mkrvwb5m: email
   };
+
+  const columnValuesStr = JSON.stringify(columnValues).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
   const query = `
     mutation {
       create_item(
         board_id: ${boardId},
         item_name: "${itemName}",
-        column_values: "${JSON.stringify(columnValues).replace(/"/g, '\\"')}"
+        column_values: "${columnValuesStr}"
       ) {
         id
       }
@@ -48,7 +51,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (data.errors) {
-      console.error('Monday API error:', data.errors);
+      console.error('Monday API error:', JSON.stringify(data.errors, null, 2));
       return res.status(500).json({ message: 'Monday API error', errors: data.errors });
     }
 
