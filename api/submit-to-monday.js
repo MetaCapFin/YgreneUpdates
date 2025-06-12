@@ -1,25 +1,22 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Only POST requests allowed' });
+  if (req.method !== "POST") {
+    return res.status(405).send({ message: "Only POST requests allowed" });
   }
 
-  const { fullName, phone, email } = req.body;
+  const { name, phone, email } = req.body;
 
-  const boardId = '9365290800';
-  const phoneColumnId = 'phone_mkrvn3jx';
-  const emailColumnId = 'email_mkrvwb5m';
-
+  const boardId = "9365290800";
   const columnValues = {
-    [phoneColumnId]: phone,
-    [emailColumnId]: email
+    phone_mkrvn3jx: phone,
+    email_mkrvwb5m: email,
   };
 
-  const query = `
+  const mutation = `
     mutation {
-      create_item(
+      create_item (
         board_id: ${boardId},
-        item_name: "${fullName}",
-        column_values: "${JSON.stringify(columnValues).replace(/"/g, '\\"')}"
+        item_name: "${name}",
+        column_values: ${JSON.stringify(JSON.stringify(columnValues))}
       ) {
         id
       }
@@ -27,26 +24,27 @@ export default async function handler(req, res) {
   `;
 
   try {
-    const response = await fetch('https://api.monday.com/v2', {
-      method: 'POST',
+    const response = await fetch("https://api.monday.com/v2", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: process.env.MONDAY_API_KEY
+        "Content-Type": "application/json",
+        Authorization: "your-monday-api-key-here"
       },
-      body: JSON.stringify({ query })
+      body: JSON.stringify({ query: mutation }),
     });
 
-    const data = await response.json();
+    const result = await response.json();
 
-    if (data.errors) {
-      console.error('Monday API error:', data.errors);
-      return res.status(500).json({ error: 'Failed to create item' });
+    if (result.errors) {
+      console.error(result.errors);
+      return res.status(500).json({ error: "Monday API error", details: result.errors });
     }
 
-    res.status(200).json({ success: true, itemId: data.data.create_item.id });
+    res.status(200).json({ success: true });
   } catch (error) {
-    console.error('Server error:', error);
-    res.status(500).json({ error: 'Server error' });
+    console.error("Error submitting to Monday.com:", error);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
 
