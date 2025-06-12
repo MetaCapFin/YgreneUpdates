@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "your-monday-api-key-here"
+        Authorization: "Bearer YOUR_MONDAY_API_KEY" // Use Vercel env var if preferred
       },
       body: JSON.stringify({ query: mutation }),
     });
@@ -46,5 +46,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
-
-
