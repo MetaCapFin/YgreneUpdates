@@ -18,9 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let userName = null;
   let awaitingHelpConfirmation = false;
 
-  // Simulate whether the API is down or not
-  let simulateError = true; // Set to `false` once API integration is live
-
   const appendMessage = (text, sender) => {
     const msg = document.createElement("div");
     msg.className = `chat-message ${sender}`;
@@ -48,72 +45,58 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Simulated API failure handling
-    if (simulateError) {
-      if (awaitingHelpConfirmation) {
-        const lowerInput = userInput.toLowerCase();
-        if (["yes", "sure", "okay", "please", "yeah", "yep"].some(word => lowerInput.includes(word))) {
-          appendMessage(
-            `Here’s how you can get in touch:\n\nYgreneVIP Support:\n📞 Phone: XXX XXX XXXX\n📧 Email: support@ygrene.vip\n\nRM: C.A.\n📧 Email: c.a.@ygrene.vip\n📞 Phone: XXX XXX XXXX`,
-            "bot"
-          );
-          appendMessage(`You can also schedule a one-on-one via the QR code below:`, "bot");
+    if (awaitingHelpConfirmation) {
+      const lowerInput = userInput.toLowerCase();
+      if (["yes", "sure", "okay", "please", "yeah", "yep"].some(word => lowerInput.includes(word))) {
+        appendMessage(
+          `Here’s how you can get in touch:\n\nYgreneVIP Support:\n📞 Phone: XXX XXX XXXX\n📧 Email: support@ygrene.vip\n\nRM: C.A.\n📧 Email: c.a.@ygrene.vip\n📞 Phone: XXX XXX XXXX`,
+          "bot"
+        );
+        appendMessage(`You can also schedule a one-on-one via the QR code below:`, "bot");
 
-          const qrImage = document.createElement("img");
-          qrImage.src = "https://your-calendly-qr-link.png"; // Replace with your actual QR image URL
-          qrImage.alt = "Schedule with RM";
-          qrImage.style.width = "120px";
-          qrImage.style.margin = "10px 0";
-          chatMessages.appendChild(qrImage);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
+        const qrImage = document.createElement("img");
+        qrImage.src = "https://your-calendly-qr-link.png"; // Replace with real QR code image URL
+        qrImage.alt = "Schedule with RM";
+        qrImage.style.width = "120px";
+        qrImage.style.margin = "10px 0";
+        chatMessages.appendChild(qrImage);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
-          awaitingHelpConfirmation = false;
-        } else {
-          appendMessage(`No problem! I'm still here if you want to try again later.`, "bot");
-          awaitingHelpConfirmation = false;
-        }
-        return;
+        awaitingHelpConfirmation = false;
+      } else {
+        appendMessage(`No problem! I'm still here if you want to try again later.`, "bot");
+        awaitingHelpConfirmation = false;
       }
-
-      appendMessage(
-        `Hmm... it looks like I'm having trouble reaching my brain right now (the AI service is unavailable). But I'm still here for you! Try again in a moment, or contact our support team if it's urgent. Would you like me to help you connect to your RM or a Support Agent?`,
-        "bot"
-      );
-      awaitingHelpConfirmation = true;
       return;
     }
 
-    // Main knowledge logic
-      const lowerInput = userInput.toLowerCase();
-        let response = null;
-    
-        // Basic intent detection
-        if (lowerInput.includes("what is ygrene") || lowerInput.includes("who is ygrene")) {
-          response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements. Would you like to know what types of projects are eligible?";
-        } else if (lowerInput.includes("how do i apply") || lowerInput.includes("apply")) {
-          response = `You can apply through Ygrene’s website. Would you like me to guide you through the process, ${userName}?`;
-        } else if (
-          lowerInput.includes("eligible") || 
-          lowerInput.includes("projects") || 
-          lowerInput.includes("improvements")
-        ) {
-          response = "Eligible projects typically include solar panels, roofing, HVAC, impact windows, and more. Would you like the full list?";
-        }
-    
-        // No known keyword matched
-        if (!response) {
-          appendMessage(
-            `Hmm... I’m not sure I have an answer for that right now, ${userName}. Would you like me to connect you with a Support Agent or your Relationship Manager?`,
-            "bot"
-          );
-          awaitingHelpConfirmation = true;
-          return;
-        }
-    
-        appendMessage(response, "bot");
+    const lowerInput = userInput.toLowerCase();
+    let response = null;
 
+    if (lowerInput.includes("what is ygrene") || lowerInput.includes("who is ygrene")) {
+      response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements. Would you like to know what types of projects are eligible?";
+    } else if (lowerInput.includes("how do i apply") || lowerInput.includes("apply")) {
+      response = `You can apply through Ygrene’s website. Would you like me to guide you through the process, ${userName}?`;
+    } else if (
+      lowerInput.includes("eligible") ||
+      lowerInput.includes("projects") ||
+      lowerInput.includes("improvements")
+    ) {
+      response = "Eligible projects typically include solar panels, roofing, HVAC, impact windows, and more. Would you like the full list?";
+    }
+
+    if (response) {
+      appendMessage(response, "bot");
+    } else {
+      appendMessage(
+        `I'm not sure I can answer that right now, ${userName}. Would you like me to help you connect with a Support Agent or your Relationship Manager?`,
+        "bot"
+      );
+      awaitingHelpConfirmation = true;
+    }
   };
 });
 </script>
+
 
 
