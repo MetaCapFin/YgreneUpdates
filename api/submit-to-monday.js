@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   const { name, phone, email } = req.body;
 
-  const boardId = "9365290800";
+  const boardId = "9365290800"; // Your actual board ID
   const columnValues = {
     phone_mkrvn3jx: phone,
     email_mkrvwb5m: email,
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       create_item (
         board_id: ${boardId},
         item_name: "${name}",
-        column_values: ${JSON.stringify(JSON.stringify(columnValues))}
+        column_values: "${JSON.stringify(columnValues).replace(/"/g, '\\"')}"
       ) {
         id
       }
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer YOUR_MONDAY_API_KEY" // Use Vercel env var if preferred
+        Authorization: `Bearer ${process.env.MONDAY_API_KEY}`,
       },
       body: JSON.stringify({ query: mutation }),
     });
@@ -36,13 +36,14 @@ export default async function handler(req, res) {
     const result = await response.json();
 
     if (result.errors) {
-      console.error(result.errors);
+      console.error("Monday API error:", result.errors);
       return res.status(500).json({ error: "Monday API error", details: result.errors });
     }
 
     res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error submitting to Monday.com:", error);
+    console.error("Server error:", error);
     res.status(500).json({ error: "Server error" });
   }
 }
+
