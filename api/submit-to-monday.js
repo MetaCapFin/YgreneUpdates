@@ -1,13 +1,19 @@
-export default async function handler(req, res) {
+const fetch = require("node-fetch");
+
+module.exports = async (req, res) => {
   if (req.method !== "POST") {
-    return res.status(405).send({ message: "Only POST requests allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   const { name, phone, email } = req.body;
 
-  const boardId = "9365290800";
+  if (!name || !phone || !email) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
 
-  // These must be proper JSON strings (escaped once)
+  const boardId = 9365290800; // Your Monday board ID
+  const apiKey = process.env.MONDAY_API_KEY;
+
   const columnValues = {
     phone_mkrvn3jx: {
       phone: phone,
@@ -36,21 +42,21 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.MONDAY_API_KEY}`
+        Authorization: apiKey
       },
       body: JSON.stringify({ query: mutation })
     });
 
-    const result = await response.json();
+    const data = await response.json();
 
-    if (result.errors) {
-      console.error("Monday API error:", result.errors);
-      return res.status(500).json({ error: "Monday API error", details: result.errors });
+    if (data.errors) {
+      console.error("Monday API error:", data.errors);
+      return res.status(500).json({ error: "Monday API error", details: data.errors });
     }
 
-    res.status(200).json({ success: true, data: result.data });
+    return res.status(200).json({ message: "Lead submitted successfully", itemId: data.data.create_item.id });
   } catch (error) {
-    console.error("Error submitting to Monday.com:", error);
-    res.status(500).json({ error: "Server error" });
+    console.error("Fetch error:", error);
+    return res.status(500).json({ error: "Failed to submit lead" });
   }
-}
+};
