@@ -191,12 +191,29 @@
 
       if (lower.includes("ygrene")) {
         response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements.";
+        delayBotResponse(response);
       } else if (lower.includes("apply")) {
         response = `You can apply through Ygrene’s website. Would you like me to help you schedule a call from our support team?`;
         awaitingHelpConfirmation = true;
+        delayBotResponse(response);
       } else {
-        response = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
-        awaitingHelpConfirmation = true;
+        // Fallback to OpenAI
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userInput })
+          });
+      
+          const data = await res.json();
+          if (res.ok && data && data.reply) {
+            delayBotResponse(data.reply);
+          } else {
+            delayBotResponse(`Hmm, I couldn't get a smart answer. Want to talk to our team instead?`);
+          }
+        } catch (err) {
+          delayBotResponse("⚠️ I had trouble reaching the brain center (OpenAI). Try again later.");
+        }
       }
 
       if (response) delayBotResponse(response);
