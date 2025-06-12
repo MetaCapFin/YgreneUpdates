@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 
   const { fullName, phone, email } = req.body;
 
+  // Basic validation
   if (!fullName || !phone || !email) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
@@ -14,18 +15,27 @@ export default async function handler(req, res) {
   const boardId = 9365290800;
   const itemName = fullName;
 
-  const formattedPhone = {
-    phone: `+1${phone.replace(/\D/g, '').slice(-10)}`,
-    countryShortName: 'US'
-  };
+  // Sanitize and format phone number (US-only logic)
+  const formattedPhone = `+1${phone.replace(/\D/g, '').slice(-10)}`;
 
+  // Format column values with correct nested structure
   const columnValues = {
-    phone_mkrvn3jx: formattedPhone,
-    email_mkrvwb5m: email
+    phone_mkrvn3jx: {
+      phone: formattedPhone,
+      countryShortName: 'US'
+    },
+    email_mkrvwb5m: {
+      email: email,
+      text: fullName // Optional label shown in Monday UI
+    }
   };
 
-  const columnValuesStr = JSON.stringify(columnValues).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  // Convert columnValues into a safely escaped string
+  const columnValuesStr = JSON.stringify(columnValues)
+    .replace(/\\/g, '\\\\')  // Escape backslashes
+    .replace(/"/g, '\\"');   // Escape double quotes
 
+  // Construct GraphQL mutation query
   const query = `
     mutation {
       create_item(
@@ -43,21 +53,23 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: process.env.MONDAY_API_KEY
+        Authorization: process.env.MONDAY_API_KEY // Must be set in your Vercel/ENV
       },
       body: JSON.stringify({ query })
     });
 
     const data = await response.json();
 
+    // Check for API errors
     if (data.errors) {
       console.error('Monday API error:', JSON.stringify(data.errors, null, 2));
       return res.status(500).json({ message: 'Monday API error', errors: data.errors });
     }
 
-    res.status(200).json({ message: 'Item created successfully', data });
+    // Success response
+    return res.status(200).json({ message: 'Item created successfully', data });
   } catch (error) {
     console.error('Request failed:', error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    return res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
