@@ -84,18 +84,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Main knowledge logic
-    const lowerInput = userInput.toLowerCase();
-    let response = "";
+      const lowerInput = userInput.toLowerCase();
+        let response = null;
+    
+        // Basic intent detection
+        if (lowerInput.includes("what is ygrene") || lowerInput.includes("who is ygrene")) {
+          response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements. Would you like to know what types of projects are eligible?";
+        } else if (lowerInput.includes("how do i apply") || lowerInput.includes("apply")) {
+          response = `You can apply through Ygrene’s website. Would you like me to guide you through the process, ${userName}?`;
+        } else if (
+          lowerInput.includes("eligible") || 
+          lowerInput.includes("projects") || 
+          lowerInput.includes("improvements")
+        ) {
+          response = "Eligible projects typically include solar panels, roofing, HVAC, impact windows, and more. Would you like the full list?";
+        }
+    
+        // No known keyword matched
+        if (!response) {
+          appendMessage(
+            `Hmm... I’m not sure I have an answer for that right now, ${userName}. Would you like me to connect you with a Support Agent or your Relationship Manager?`,
+            "bot"
+          );
+          awaitingHelpConfirmation = true;
+          return;
+        }
+    
+        appendMessage(response, "bot");
 
-    if (lowerInput.includes("what is ygrene")) {
-      response = "Ygrene provides financing for energy-efficient and storm-resilient home improvements. Would you like to know what projects are eligible?";
-    } else if (lowerInput.includes("how do i apply")) {
-      response = "You can apply online through the Ygrene portal. I can help guide you through it step by step.";
-    } else {
-      response = `That's a great question, ${userName}, but I might not have the full answer right now. Would you like me to connect you with a human expert or direct you to our help center?`;
-    }
-
-    appendMessage(response, "bot");
   };
 });
 </script>
