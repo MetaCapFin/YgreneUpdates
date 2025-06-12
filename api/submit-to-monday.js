@@ -7,9 +7,9 @@ export default async function handler(req, res) {
 
   const boardId = "9365290800"; // Your actual board ID
   const columnValues = {
-    phone_mkrvn3jx: phone,
-    email_mkrvwb5m: email,
-  };
+  phone_mkrvn3jx: JSON.stringify({ phone: phone, countryShortName: "us" }),
+  email_mkrvwb5m: JSON.stringify({ email: email, text: email }),
+};
 
   const mutation = `
     mutation {
