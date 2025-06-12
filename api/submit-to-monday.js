@@ -14,14 +14,12 @@ export default async function handler(req, res) {
   const boardId = 9365290800;
   const itemName = fullName;
 
-  // Proper phone format as required by Monday.com phone column
-  const phoneValue = {
-    phone: "+1" + phone.replace(/\D/g, '').slice(-10),
-    countryShortName: "us"
-  };
-
+  // ✅ Correct JSON format for the phone column
   const columnValues = {
-    phone_mkrvn3jx: phoneValue,
+    phone_mkrvn3jx: {
+      phone: "+1" + phone.replace(/\D/g, '').slice(-10),
+      countryShortName: "us"
+    },
     email_mkrvwb5m: email
   };
 
@@ -50,7 +48,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (data.errors) {
-      console.error('Monday API error:', JSON.stringify(data.errors, null, 2));
+      console.error('Monday API error:', data.errors);
       return res.status(500).json({ message: 'Monday API error', errors: data.errors });
     }
 
