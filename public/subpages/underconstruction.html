@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chat with Ygrene</title>
   <link rel="stylesheet" href="/chat-widget.css" />
   <style>
     html, body {
       height: 100%;
+      margin: 0;
+      padding: 0;
     }
 
     .back-to-main {
@@ -25,25 +27,96 @@
       align-self: center;
     }
 
-    .fade-in {
+    /* Bot message fade-in */
+    .fade-in-bot {
       opacity: 0;
-      animation: fadeIn 1s ease forwards;
+      animation: fadeInBot 1s ease forwards;
     }
 
-    @keyframes fadeIn {
+    @keyframes fadeInBot {
       to {
         opacity: 1;
       }
     }
-  </style>
 
-  <!-- Open Graph Metadata -->
-  <meta property="og:title" content="Chat with Ygrene V.Y.P. AI Assistant" />
-  <meta property="og:description" content="Get help understanding Ygrene and their services with our AI-powered chatbot assistant." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" />
-  <meta property="og:url" content="public/ygrenelogofunnel.png" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
+    /* User message slide up + fade-in */
+    .slide-fade-in-user {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideFadeInUser 0.4s ease forwards;
+    }
+
+    @keyframes slideFadeInUser {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Add some spacing and scroll behavior */
+    #chat-messages {
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .chat-message {
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 80%;
+      font-family: 'Mulish', sans-serif;
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      background-color: #BFD400;
+      color: #303C42;
+    }
+
+    .chat-message.bot {
+      align-self: flex-start;
+      background-color: #f1f1f1;
+      color: #000;
+    }
+
+    #chat-widget-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .chat-header {
+      padding: 16px;
+      background-color: #303C42;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .chat-submit {
+      background-color: #BFD400;
+      border: none;
+      padding: 10px 16px;
+      font-family: 'Mulish', sans-serif;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
@@ -73,24 +146,26 @@
     let userName = null;
     let awaitingHelpConfirmation = false;
 
-    const appendMessage = (text, sender, withFade = false) => {
+    const appendMessage = (text, sender) => {
       const msg = document.createElement("div");
       msg.className = `chat-message ${sender}`;
-      msg.innerText = text;
-      if (withFade) {
-        msg.classList.add("fade-in");
+
+      if (sender === "bot") {
+        msg.classList.add("fade-in-bot");
+      } else if (sender === "user") {
+        msg.classList.add("slide-fade-in-user");
       }
+
+      msg.innerText = text;
       messages.appendChild(msg);
       messages.scrollTop = messages.scrollHeight;
     };
 
-    // Show welcome message 1 second after load
     window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         appendMessage(
           "Hello! and welcome to V.Y.P.-Chatbot lounge! I use generative AI to help you better understand Ygrene and Ygrene's product.\n\nYou are our Very Ygrene Person — what is your name?",
-          "bot",
-          true
+          "bot"
         );
       }, 1000);
     });
@@ -119,7 +194,7 @@
           appendMessage(`You can also schedule a one-on-one via the QR code below:`, "bot");
 
           const qrImage = document.createElement("img");
-          qrImage.src = "https://your-calendly-qr-link.png"; // Replace with actual QR code image URL
+          qrImage.src = "https://your-calendly-qr-link.png";
           qrImage.alt = "Schedule with RM";
           qrImage.style.width = "120px";
           qrImage.style.margin = "10px 0";
@@ -162,5 +237,6 @@
   </script>
 </body>
 </html>
+
 
 
