@@ -6,10 +6,7 @@
   <title>Chat with Ygrene</title>
   <link rel="stylesheet" href="/chat-widget.css" />
   <style>
-    html, body {
-      height: 100%;
-    }
-
+    html, body { height: 100%; }
     .back-to-main {
       padding: 10px 20px;
       background-color: #BFD400;
@@ -20,60 +17,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 0;
       margin-top: 20px;
-      align-self: center;
     }
 
-    /* Animations */
     @keyframes slideFadeInUser {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .slide-fade-in-user {
-      animation: slideFadeInUser 0.4s ease forwards;
-    }
+    .slide-fade-in-user { animation: slideFadeInUser 0.4s ease forwards; }
 
     @keyframes fadeInBot {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    .fade-in-bot {
-      animation: fadeInBot 1s ease forwards;
-    }
+    .fade-in-bot { animation: fadeInBot 1s ease forwards; }
   </style>
-
-  <!-- Open Graph Metadata -->
-  <meta property="og:title" content="Chat with Ygrene V.Y.P. AI Assistant" />
-  <meta property="og:description" content="Get help understanding Ygrene and their services with our AI-powered chatbot assistant." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/MetaCapFin/YgreneUpdates/main/public/ygrenelogofunnel.png" />
-  <meta property="og:url" content="public/ygrenelogofunnel.png" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
 </head>
-
 <body>
   <div id="chat-widget-container">
     <div class="chat-header">VYP-Chatbot</div>
     <div class="chat-messages" id="chat-messages"></div>
     <form class="chat-input-area" id="chat-form">
-      <input
-        type="text"
-        id="chat-input"
-        class="chat-input"
-        placeholder="Say something..."
-        required
-      />
+      <input type="text" id="chat-input" class="chat-input" placeholder="Say something..." required />
       <button type="submit" class="chat-submit">Send</button>
     </form>
     <button class="back-to-main" onclick="window.location.href='/'">
@@ -109,8 +74,7 @@
       setTimeout(() => {
         appendMessage(
           "Hello! Welcome to the V.Y.P.-Chatbot lounge! I'm here to help you better understand Ygrene.\n\nWhat is your name?",
-          "bot",
-          true
+          "bot", true
         );
       }, 1000);
     });
@@ -159,7 +123,6 @@
 
           delayBotResponse("Thanks! Sending your info now...");
 
-          // ✅ Corrected POST request to match backend expectations
           try {
             const res = await fetch("/api/submit-to-monday", {
               method: "POST",
@@ -191,34 +154,37 @@
 
       if (lower.includes("ygrene")) {
         response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements.";
-        delayBotResponse(response);
       } else if (lower.includes("apply")) {
         response = `You can apply through Ygrene’s website. Would you like me to help you schedule a call from our support team?`;
         awaitingHelpConfirmation = true;
-        delayBotResponse(response);
-      } else {
-        // Fallback to OpenAI
-        try {
-          const res = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: userInput })
-          });
-      
-          const data = await res.json();
-          if (res.ok && data && data.reply) {
-            delayBotResponse(data.reply);
-          } else {
-            delayBotResponse(`Hmm, I couldn't get a smart answer. Want to talk to our team instead?`);
-          }
-        } catch (err) {
-          delayBotResponse("⚠️ I had trouble reaching the brain center (OpenAI). Try again later.");
-        }
       }
 
-      if (response) delayBotResponse(response);
+      if (response) {
+        delayBotResponse(response);
+      } else {
+        try {
+          const openaiRes = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userInput }),
+          });
+
+          const data = await openaiRes.json();
+          if (data?.reply) {
+            delayBotResponse(data.reply);
+            awaitingHelpConfirmation = true; // still offer help after AI reply
+          } else {
+            delayBotResponse("Sorry, I didn't quite get that. Could you try rephrasing?");
+          }
+        } catch (err) {
+          delayBotResponse("⚠️ Error reaching assistant. Please try again later.");
+        }
+      }
     };
   </script>
+</body>
+</html>
+
 
 </body>
 </html>
