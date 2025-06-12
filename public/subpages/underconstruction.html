@@ -124,34 +124,41 @@
 
       if (!userName) {
         userName = userInput;
-        appendMessage(`Nice to meet you, ${userName}! How can I help you today?`, "bot");
+        setTimeout(() => {
+          appendMessage(`Nice to meet you, ${userName}! How can I help you today?`, "bot");
+        }, 800);
         return;
       }
 
       if (awaitingHelpConfirmation) {
         const lowerInput = userInput.toLowerCase();
         if (["yes", "sure", "okay", "please", "yeah", "yep"].some(word => lowerInput.includes(word))) {
-          appendMessage(
-            `Here’s how you can get in touch:\n\nYgreneVIP Support:\n📞 Phone: XXX XXX XXXX\n📧 Email: support@ygrene.vip\n\nRM: C.A.\n📧 Email: c.a.@ygrene.vip\n📞 Phone: XXX XXX XXXX`,
-            "bot"
-          );
-          appendMessage(`You can also schedule a one-on-one via the QR code below:`, "bot");
-
-          const qrImage = document.createElement("img");
-          qrImage.src = "https://your-calendly-qr-link.png"; // Replace with actual QR code image URL
-          qrImage.alt = "Schedule with RM";
-          qrImage.style.width = "120px";
-          qrImage.style.margin = "10px 0";
-          messages.appendChild(qrImage);
-          messages.scrollTop = messages.scrollHeight;
-
-          awaitingHelpConfirmation = false;
+          setTimeout(() => {
+            appendMessage(
+              `Here’s how you can get in touch:\n\nYgreneVIP Support:\n📞 Phone: XXX XXX XXXX\n📧 Email: support@ygrene.vip\n\nRM: C.A.\n📧 Email: c.a.@ygrene.vip\n📞 Phone: XXX XXX XXXX`,
+              "bot"
+            );
+            appendMessage(`You can also schedule a one-on-one via the QR code below:`, "bot");
+      
+            const qrImage = document.createElement("img");
+            qrImage.src = "https://your-calendly-qr-link.png"; // Replace with actual QR code image URL
+            qrImage.alt = "Schedule with RM";
+            qrImage.style.width = "120px";
+            qrImage.style.margin = "10px 0";
+            messages.appendChild(qrImage);
+            messages.scrollTop = messages.scrollHeight;
+      
+            awaitingHelpConfirmation = false;
+          }, 900);
         } else {
-          appendMessage(`No problem! I'm still here if you want to try again later.`, "bot");
-          awaitingHelpConfirmation = false;
+          setTimeout(() => {
+            appendMessage(`No problem! I'm still here if you want to try again later.`, "bot");
+            awaitingHelpConfirmation = false;
+          }, 800);
         }
         return;
       }
+
 
       const lower = userInput.toLowerCase();
       let response = null;
