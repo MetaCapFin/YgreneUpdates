@@ -7,10 +7,16 @@ export default async function handler(req, res) {
 
   const boardId = "9365290800";
 
-  // Use simple string values (not objects) for special columns
+  // These must be proper JSON strings (escaped once)
   const columnValues = {
-    phone_mkrvn3jx: phone,
-    email_mkrvwb5m: email
+    phone_mkrvn3jx: {
+      phone: phone,
+      countryShortName: "us"
+    },
+    email_mkrvwb5m: {
+      email: email,
+      text: email
+    }
   };
 
   const mutation = `
@@ -18,7 +24,7 @@ export default async function handler(req, res) {
       create_item (
         board_id: ${boardId},
         item_name: "${name}",
-        column_values: """${JSON.stringify(columnValues)}"""
+        column_values: ${JSON.stringify(JSON.stringify(columnValues))}
       ) {
         id
       }
@@ -48,6 +54,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
-
-
-
