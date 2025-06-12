@@ -82,125 +82,130 @@
   </div>
 
   <script>
-  const form = document.getElementById("chat-form");
-  const input = document.getElementById("chat-input");
-  const messages = document.getElementById("chat-messages");
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("chat-input");
+    const messages = document.getElementById("chat-messages");
 
-  let userName = null;
-  let awaitingHelpConfirmation = false;
-  let collectingLead = false;
-  let leadStep = 0;
-  let leadData = {};
+    let userName = null;
+    let awaitingHelpConfirmation = false;
+    let collectingLead = false;
+    let leadStep = 0;
+    let leadData = {};
 
-  const appendMessage = (text, sender, withFade = false) => {
-    const msg = document.createElement("div");
-    msg.className = `chat-message ${sender}`;
-    msg.innerText = text;
-    if (withFade) msg.classList.add("fade-in");
-    messages.appendChild(msg);
-    messages.scrollTop = messages.scrollHeight;
-  };
+    const appendMessage = (text, sender, withFade = false) => {
+      const msg = document.createElement("div");
+      msg.className = `chat-message ${sender}`;
+      msg.innerText = text;
+      if (withFade) msg.classList.add("fade-in");
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    };
 
-  const delayBotResponse = (text) => {
-    setTimeout(() => appendMessage(text, "bot", true), 1000);
-  };
+    const delayBotResponse = (text) => {
+      setTimeout(() => appendMessage(text, "bot", true), 1000);
+    };
 
-  window.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-      appendMessage(
-        "Hello! Welcome to the V.Y.P.-Chatbot lounge! I'm here to help you better understand Ygrene.\n\nWhat is your name?",
-        "bot",
-        true
-      );
-    }, 1000);
-  });
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        appendMessage(
+          "Hello! Welcome to the V.Y.P.-Chatbot lounge! I'm here to help you better understand Ygrene.\n\nWhat is your name?",
+          "bot",
+          true
+        );
+      }, 1000);
+    });
 
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    const userInput = input.value.trim();
-    if (!userInput) return;
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const userInput = input.value.trim();
+      if (!userInput) return;
 
-    appendMessage(userInput, "user", true);
-    input.value = "";
+      appendMessage(userInput, "user", true);
+      input.value = "";
 
-    if (!userName) {
-      userName = userInput;
-      delayBotResponse(`Nice to meet you, ${userName}! How can I help you today?`);
-      return;
-    }
-
-    if (awaitingHelpConfirmation) {
-      const lowerInput = userInput.toLowerCase();
-      if (["yes", "sure", "okay", "please", "yeah", "yep"].some(w => lowerInput.includes(w))) {
-        awaitingHelpConfirmation = false;
-        collectingLead = true;
-        leadStep = 1;
-        delayBotResponse("Great! Let's get started. What is your **full name**?");
-      } else {
-        awaitingHelpConfirmation = false;
-        delayBotResponse("No worries. Let me know if you change your mind.");
-      }
-      return;
-    }
-
-    if (collectingLead) {
-      if (leadStep === 1) {
-        leadData.name = userInput;
-        leadStep++;
-        delayBotResponse("Thanks! What's your **mobile number**?");
-      } else if (leadStep === 2) {
-        leadData.phone = userInput;
-        leadStep++;
-        delayBotResponse("And finally, what's your **email address**?");
-      } else if (leadStep === 3) {
-        leadData.email = userInput;
-        collectingLead = false;
-        leadStep = 0;
-
-        delayBotResponse("Thanks! Sending your info now...");
-
-        // Send to backend
-        try {
-          const res = await fetch("/api/submit-to-monday", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(leadData),
-          });
-
-          if (res.ok) {
-            delayBotResponse("✅ You're all set! Our support team will reach out shortly.");
-          } else {
-            delayBotResponse("⚠️ Oops, something went wrong submitting your info. Please try again.");
-          }
-        } catch (err) {
-          delayBotResponse("⚠️ Error connecting to the server.");
-        }
-
-        leadData = {};
+      if (!userName) {
+        userName = userInput;
+        delayBotResponse(`Nice to meet you, ${userName}! How can I help you today?`);
         return;
       }
-      return;
-    }
 
-    const lower = userInput.toLowerCase();
-    let response = null;
+      if (awaitingHelpConfirmation) {
+        const lowerInput = userInput.toLowerCase();
+        if (["yes", "sure", "okay", "please", "yeah", "yep"].some(w => lowerInput.includes(w))) {
+          awaitingHelpConfirmation = false;
+          collectingLead = true;
+          leadStep = 1;
+          delayBotResponse("Great! Let's get started. What is your **full name**?");
+        } else {
+          awaitingHelpConfirmation = false;
+          delayBotResponse("No worries. Let me know if you change your mind.");
+        }
+        return;
+      }
 
-    if (lower.includes("ygrene")) {
-      response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements.";
-    } else if (lower.includes("apply")) {
-      response = `You can apply through Ygrene’s website. Would you like me to help you schedule a call from our support team?`;
-      awaitingHelpConfirmation = true;
-    } else {
-      response = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
-      awaitingHelpConfirmation = true;
-    }
+      if (collectingLead) {
+        if (leadStep === 1) {
+          leadData.name = userInput;
+          leadStep++;
+          delayBotResponse("Thanks! What's your **mobile number**?");
+        } else if (leadStep === 2) {
+          leadData.phone = userInput;
+          leadStep++;
+          delayBotResponse("And finally, what's your **email address**?");
+        } else if (leadStep === 3) {
+          leadData.email = userInput;
+          collectingLead = false;
+          leadStep = 0;
 
-    if (response) delayBotResponse(response);
-  };
-</script>
+          delayBotResponse("Thanks! Sending your info now...");
+
+          // ✅ Corrected POST request to match backend expectations
+          try {
+            const res = await fetch("/api/submit-to-monday", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                fullName: leadData.name,
+                phone: leadData.phone,
+                email: leadData.email,
+              }),
+            });
+
+            if (res.ok) {
+              delayBotResponse("✅ You're all set! Our support team will reach out shortly.");
+            } else {
+              delayBotResponse("⚠️ Oops, something went wrong submitting your info. Please try again.");
+            }
+          } catch (err) {
+            delayBotResponse("⚠️ Error connecting to the server.");
+          }
+
+          leadData = {};
+          return;
+        }
+        return;
+      }
+
+      const lower = userInput.toLowerCase();
+      let response = null;
+
+      if (lower.includes("ygrene")) {
+        response = "Ygrene provides PACE financing for energy-efficient and storm-resilient home improvements.";
+      } else if (lower.includes("apply")) {
+        response = `You can apply through Ygrene’s website. Would you like me to help you schedule a call from our support team?`;
+        awaitingHelpConfirmation = true;
+      } else {
+        response = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
+        awaitingHelpConfirmation = true;
+      }
+
+      if (response) delayBotResponse(response);
+    };
+  </script>
 
 </body>
 </html>
+
 
 
 
