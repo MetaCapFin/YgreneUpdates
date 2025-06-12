@@ -1,3 +1,4 @@
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const chatContainer = document.getElementById("chat-widget");
 
@@ -15,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatMessages = chatContainer.querySelector("#chat-messages");
 
   let userName = null;
+  let awaitingHelpConfirmation = false;
+
+  // Simulate whether the API is down or not
+  let simulateError = true; // Set to `false` once API integration is live
 
   const appendMessage = (text, sender) => {
     const msg = document.createElement("div");
@@ -43,14 +48,56 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let response = `Thanks for your message, ${userName}. I'm here to help you with Ygrene.`;
+    // Simulated API failure handling
+    if (simulateError) {
+      if (awaitingHelpConfirmation) {
+        const lowerInput = userInput.toLowerCase();
+        if (["yes", "sure", "okay", "please", "yeah", "yep"].some(word => lowerInput.includes(word))) {
+          appendMessage(
+            `Here’s how you can get in touch:\n\nYgreneVIP Support:\n📞 Phone: XXX XXX XXXX\n📧 Email: support@ygrene.vip\n\nRM: C.A.\n📧 Email: c.a.@ygrene.vip\n📞 Phone: XXX XXX XXXX`,
+            "bot"
+          );
+          appendMessage(`You can also schedule a one-on-one via the QR code below:`, "bot");
 
-    if (userInput.toLowerCase().includes("what is ygrene")) {
+          const qrImage = document.createElement("img");
+          qrImage.src = "https://your-calendly-qr-link.png"; // Replace with your actual QR image URL
+          qrImage.alt = "Schedule with RM";
+          qrImage.style.width = "120px";
+          qrImage.style.margin = "10px 0";
+          chatMessages.appendChild(qrImage);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          awaitingHelpConfirmation = false;
+        } else {
+          appendMessage(`No problem! I'm still here if you want to try again later.`, "bot");
+          awaitingHelpConfirmation = false;
+        }
+        return;
+      }
+
+      appendMessage(
+        `Hmm... it looks like I'm having trouble reaching my brain right now (the AI service is unavailable). But I'm still here for you! Try again in a moment, or contact our support team if it's urgent. Would you like me to help you connect to your RM or a Support Agent?`,
+        "bot"
+      );
+      awaitingHelpConfirmation = true;
+      return;
+    }
+
+    // Main knowledge logic
+    const lowerInput = userInput.toLowerCase();
+    let response = "";
+
+    if (lowerInput.includes("what is ygrene")) {
       response = "Ygrene provides financing for energy-efficient and storm-resilient home improvements. Would you like to know what projects are eligible?";
-    } else if (userInput.toLowerCase().includes("how do i apply")) {
+    } else if (lowerInput.includes("how do i apply")) {
       response = "You can apply online through the Ygrene portal. I can help guide you through it step by step.";
+    } else {
+      response = `That's a great question, ${userName}, but I might not have the full answer right now. Would you like me to connect you with a human expert or direct you to our help center?`;
     }
 
     appendMessage(response, "bot");
   };
 });
+</script>
+
+
