@@ -13,10 +13,15 @@ export default async function handler(req, res) {
 
   const boardId = 9365290800;
   const itemName = fullName;
+
+  // Proper phone format as required by Monday.com phone column
+  const phoneValue = {
+    phone: "+1" + phone.replace(/\D/g, '').slice(-10),
+    countryShortName: "us"
+  };
+
   const columnValues = {
-    phone_mkrvn3jx: JSON.stringify({
-      phone: "+1" + phone.replace(/\D/g, '').slice(-10)
-    }),
+    phone_mkrvn3jx: phoneValue,
     email_mkrvwb5m: email
   };
 
@@ -25,7 +30,7 @@ export default async function handler(req, res) {
       create_item(
         board_id: ${boardId},
         item_name: "${itemName}",
-        column_values: ${JSON.stringify(JSON.stringify(columnValues))}
+        column_values: "${JSON.stringify(columnValues).replace(/"/g, '\\"')}"
       ) {
         id
       }
@@ -45,7 +50,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (data.errors) {
-      console.error('Monday API error:', data.errors);
+      console.error('Monday API error:', JSON.stringify(data.errors, null, 2));
       return res.status(500).json({ message: 'Monday API error', errors: data.errors });
     }
 
