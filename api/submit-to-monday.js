@@ -1,6 +1,4 @@
-const fetch = require("node-fetch");
-
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -11,16 +9,16 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: "Missing required fields." });
   }
 
-  const boardId = 9365290800; // Your Monday board ID
+  const boardId = 9365290800;
   const apiKey = process.env.MONDAY_API_KEY;
 
   const columnValues = {
     phone_mkrvn3jx: {
-      phone: phone,
+      phone,
       countryShortName: "us"
     },
     email_mkrvwb5m: {
-      email: email,
+      email,
       text: email
     }
   };
@@ -59,4 +57,5 @@ module.exports = async (req, res) => {
     console.error("Fetch error:", error);
     return res.status(500).json({ error: "Failed to submit lead" });
   }
-};
+}
+
