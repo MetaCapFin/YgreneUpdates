@@ -1,7 +1,5 @@
 // /api/submit-to-monday.js
 
-import fetch from 'node-fetch';
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -57,5 +55,3 @@ export default async function handler(req, res) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
-
-
