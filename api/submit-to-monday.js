@@ -1,33 +1,32 @@
+// /api/submit-to-monday.js
+
+import fetch from 'node-fetch';
+
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { name, phone, email } = req.body;
+  const { fullName, phone, email } = req.body;
 
-  if (!name || !phone || !email) {
-    return res.status(400).json({ error: "Missing required fields." });
+  if (!fullName || !phone || !email) {
+    return res.status(400).json({ message: 'Missing required fields' });
   }
 
   const boardId = 9365290800;
-  const apiKey = process.env.MONDAY_API_KEY;
-
+  const itemName = fullName;
   const columnValues = {
-    phone_mkrvn3jx: {
-      phone,
-      countryShortName: "us"
-    },
-    email_mkrvwb5m: {
-      email,
-      text: email
-    }
+    phone_mkrvn3jx: JSON.stringify({
+      phone: "+1" + phone.replace(/\D/g, '').slice(-10)
+    }),
+    email_mkrvwb5m: email
   };
 
-  const mutation = `
+  const query = `
     mutation {
-      create_item (
+      create_item(
         board_id: ${boardId},
-        item_name: "${name}",
+        item_name: "${itemName}",
         column_values: ${JSON.stringify(JSON.stringify(columnValues))}
       ) {
         id
@@ -36,26 +35,27 @@ export default async function handler(req, res) {
   `;
 
   try {
-    const response = await fetch("https://api.monday.com/v2", {
-      method: "POST",
+    const response = await fetch('https://api.monday.com/v2', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: apiKey
+        'Content-Type': 'application/json',
+        Authorization: process.env.MONDAY_API_KEY
       },
-      body: JSON.stringify({ query: mutation })
+      body: JSON.stringify({ query })
     });
 
     const data = await response.json();
 
     if (data.errors) {
-      console.error("Monday API error:", data.errors);
-      return res.status(500).json({ error: "Monday API error", details: data.errors });
+      console.error('Monday API error:', data.errors);
+      return res.status(500).json({ message: 'Monday API error', errors: data.errors });
     }
 
-    return res.status(200).json({ message: "Lead submitted successfully", itemId: data.data.create_item.id });
+    res.status(200).json({ message: 'Item created successfully', data });
   } catch (error) {
-    console.error("Fetch error:", error);
-    return res.status(500).json({ error: "Failed to submit lead" });
+    console.error('Request failed:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
+
 
