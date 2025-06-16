@@ -156,16 +156,16 @@
       e.preventDefault();
       const userInput = input.value.trim();
       if (!userInput) return;
-
+    
       appendMessage(userInput, "user", true);
       input.value = "";
-
+    
       if (!userName) {
         userName = userInput;
         delayBotResponse(`Nice to meet you, ${userName}! How can I help you today?`);
         return;
       }
-
+    
       if (awaitingHelpConfirmation) {
         const lowerInput = userInput.toLowerCase();
         if (["yes", "sure", "okay", "please", "yeah", "yep"].some(w => lowerInput.includes(w))) {
@@ -179,7 +179,7 @@
         }
         return;
       }
-
+    
       if (collectingLead) {
         if (leadStep === 1) {
           leadData.name = userInput;
@@ -193,9 +193,9 @@
           leadData.email = userInput;
           collectingLead = false;
           leadStep = 0;
-
+    
           delayBotResponse("Thanks! Sending your info now...");
-
+    
           try {
             const res = await fetch("/api/submit-to-monday", {
               method: "POST",
@@ -204,9 +204,10 @@
                 fullName: leadData.name,
                 phone: leadData.phone,
                 email: leadData.email,
+                reason: leadData.reason || "", // ✅ send the unanswered question
               }),
             });
-
+    
             if (res.ok) {
               delayBotResponse("✅ You're all set! Our support team will reach out shortly.");
             } else {
@@ -215,13 +216,13 @@
           } catch (err) {
             delayBotResponse("⚠️ Error connecting to the server.");
           }
-
+    
           leadData = {};
           return;
         }
         return;
       }
-
+    
       // ============ Attempt OpenAI call ==============
       try {
         const openaiRes = await fetch("/api/chat", {
@@ -229,9 +230,9 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: userInput }),
         });
-
+    
         const data = await openaiRes.json();
-
+    
         if (data?.reply) {
           delayBotResponse(data.reply);
         } else {
@@ -239,11 +240,16 @@
         }
       } catch (err) {
         console.warn("OpenAI call failed, falling back:", err);
+    
+        // ✅ Capture the question that failed
+        leadData.reason = userInput;
+    
         const fallback = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
         delayBotResponse(fallback);
         awaitingHelpConfirmation = true;
       }
     };
+
   </script>
 </body>
 </html>
