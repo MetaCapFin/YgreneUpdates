@@ -6,7 +6,13 @@
   <title>Chat with Ygrene</title>
   <link rel="stylesheet" href="/chat-widget.css" />
   <style>
-    html, body { height: 100%; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Mulish', sans-serif;
+    }
+
     .back-to-main {
       padding: 10px 20px;
       background-color: #BFD400;
@@ -18,6 +24,10 @@
       align-items: center;
       justify-content: center;
       margin-top: 20px;
+      width: 100%;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     @keyframes slideFadeInUser {
@@ -31,6 +41,54 @@
       to { opacity: 1; }
     }
     .fade-in-bot { animation: fadeInBot 1s ease forwards; }
+
+    /* ✅ Mobile Optimization */
+    @media screen and (max-width: 600px) {
+      #chat-widget-container {
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .chat-header {
+        font-size: 1.2rem;
+        text-align: center;
+      }
+
+      .chat-messages {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 10px;
+        font-size: 0.95rem;
+      }
+
+      .chat-input-area {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .chat-input {
+        font-size: 1rem;
+        padding: 12px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .chat-submit {
+        font-size: 1rem;
+        padding: 12px;
+        background-color: #303C42;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      .back-to-main {
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -46,143 +104,132 @@
     </button>
   </div>
 
- <script>
-  const form = document.getElementById("chat-form");
-  const input = document.getElementById("chat-input");
-  const messages = document.getElementById("chat-messages");
+  <script>
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("chat-input");
+    const messages = document.getElementById("chat-messages");
 
-  let userName = null;
-  let awaitingHelpConfirmation = false;
-  let collectingLead = false;
-  let leadStep = 0;
-  let leadData = {};
+    let userName = null;
+    let awaitingHelpConfirmation = false;
+    let collectingLead = false;
+    let leadStep = 0;
+    let leadData = {};
 
-  const appendMessage = (text, sender, withFade = false) => {
-    const msg = document.createElement("div");
-    msg.className = `chat-message ${sender}`;
-    msg.innerText = text;
-    if (withFade) msg.classList.add("fade-in");
-    messages.appendChild(msg);
-    messages.scrollTop = messages.scrollHeight;
-  };
+    const appendMessage = (text, sender, withFade = false) => {
+      const msg = document.createElement("div");
+      msg.className = `chat-message ${sender}`;
+      msg.innerText = text;
+      if (withFade) msg.classList.add("fade-in");
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    };
 
-  const delayBotResponse = (text) => {
-    setTimeout(() => appendMessage(text, "bot", true), 1000);
-  };
+    const delayBotResponse = (text) => {
+      setTimeout(() => appendMessage(text, "bot", true), 1000);
+    };
 
-  window.addEventListener("DOMContentLoaded", () => {
-    setTimeout(() => {
-      appendMessage(
-        "Hello! Welcome to the V.Y.P.-Chatbot lounge! I'm here to help you better understand Ygrene.\n\nWhat is your name?",
-        "bot",
-        true
-      );
-    }, 1000);
-  });
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        appendMessage(
+          "Hello! Welcome to the V.Y.P.-Chatbot lounge! I'm here to help you better understand Ygrene.\n\nWhat is your name?",
+          "bot",
+          true
+        );
+      }, 1000);
+    });
 
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    const userInput = input.value.trim();
-    if (!userInput) return;
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const userInput = input.value.trim();
+      if (!userInput) return;
 
-    appendMessage(userInput, "user", true);
-    input.value = "";
+      appendMessage(userInput, "user", true);
+      input.value = "";
 
-    if (!userName) {
-      userName = userInput;
-      delayBotResponse(`Nice to meet you, ${userName}! How can I help you today?`);
-      return;
-    }
-
-    if (awaitingHelpConfirmation) {
-      const lowerInput = userInput.toLowerCase();
-      if (["yes", "sure", "okay", "please", "yeah", "yep"].some(w => lowerInput.includes(w))) {
-        awaitingHelpConfirmation = false;
-        collectingLead = true;
-        leadStep = 1;
-        delayBotResponse("Great! Let's get started. What is your **full name**?");
-      } else {
-        awaitingHelpConfirmation = false;
-        delayBotResponse("No worries. Let me know if you change your mind.");
+      if (!userName) {
+        userName = userInput;
+        delayBotResponse(`Nice to meet you, ${userName}! How can I help you today?`);
+        return;
       }
-      return;
-    }
 
-    if (collectingLead) {
-      if (leadStep === 1) {
-        leadData.name = userInput;
-        leadStep++;
-        delayBotResponse("Thanks! What's your **mobile number**?");
-      } else if (leadStep === 2) {
-        leadData.phone = userInput;
-        leadStep++;
-        delayBotResponse("And finally, what's your **email address**?");
-      } else if (leadStep === 3) {
-        leadData.email = userInput;
-        collectingLead = false;
-        leadStep = 0;
-
-        delayBotResponse("Thanks! Sending your info now...");
-
-        try {
-          const res = await fetch("/api/submit-to-monday", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              fullName: leadData.name,
-              phone: leadData.phone,
-              email: leadData.email,
-            }),
-          });
-
-          if (res.ok) {
-            delayBotResponse("✅ You're all set! Our support team will reach out shortly.");
-          } else {
-            delayBotResponse("⚠️ Oops, something went wrong submitting your info. Please try again.");
-          }
-        } catch (err) {
-          delayBotResponse("⚠️ Error connecting to the server.");
+      if (awaitingHelpConfirmation) {
+        const lowerInput = userInput.toLowerCase();
+        if (["yes", "sure", "okay", "please", "yeah", "yep"].some(w => lowerInput.includes(w))) {
+          awaitingHelpConfirmation = false;
+          collectingLead = true;
+          leadStep = 1;
+          delayBotResponse("Great! Let's get started. What is your **full name**?");
+        } else {
+          awaitingHelpConfirmation = false;
+          delayBotResponse("No worries. Let me know if you change your mind.");
         }
-
-        leadData = {};
         return;
       }
-      return;
-    }
 
-    // ============ Attempt OpenAI call ==============
-  try {
-      const openaiRes = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput }),
-      });
-    
-      const data = await openaiRes.json();
-    
-      if (data?.reply) {
-        delayBotResponse(data.reply);
+      if (collectingLead) {
+        if (leadStep === 1) {
+          leadData.name = userInput;
+          leadStep++;
+          delayBotResponse("Thanks! What's your **mobile number**?");
+        } else if (leadStep === 2) {
+          leadData.phone = userInput;
+          leadStep++;
+          delayBotResponse("And finally, what's your **email address**?");
+        } else if (leadStep === 3) {
+          leadData.email = userInput;
+          collectingLead = false;
+          leadStep = 0;
+
+          delayBotResponse("Thanks! Sending your info now...");
+
+          try {
+            const res = await fetch("/api/submit-to-monday", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                fullName: leadData.name,
+                phone: leadData.phone,
+                email: leadData.email,
+              }),
+            });
+
+            if (res.ok) {
+              delayBotResponse("✅ You're all set! Our support team will reach out shortly.");
+            } else {
+              delayBotResponse("⚠️ Oops, something went wrong submitting your info. Please try again.");
+            }
+          } catch (err) {
+            delayBotResponse("⚠️ Error connecting to the server.");
+          }
+
+          leadData = {};
+          return;
+        }
         return;
-      } else {
-        throw new Error("No reply returned from OpenAI");
       }
-    } catch (err) {
-      console.warn("OpenAI call failed, falling back:", err);
-    
-      const fallback = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
-      delayBotResponse(fallback);
-      awaitingHelpConfirmation = true;
-    }
-  };
-</script>
+
+      // ============ Attempt OpenAI call ==============
+      try {
+        const openaiRes = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userInput }),
+        });
+
+        const data = await openaiRes.json();
+
+        if (data?.reply) {
+          delayBotResponse(data.reply);
+        } else {
+          throw new Error("No reply returned from OpenAI");
+        }
+      } catch (err) {
+        console.warn("OpenAI call failed, falling back:", err);
+        const fallback = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
+        delayBotResponse(fallback);
+        awaitingHelpConfirmation = true;
+      }
+    };
+  </script>
 </body>
 </html>
-
-
-</body>
-</html>
-
-
-
-
-
