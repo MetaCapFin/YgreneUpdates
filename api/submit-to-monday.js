@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { fullName, phone, email } = req.body;
+  const { fullName, phone, email, reason } = req.body;
 
   // Basic validation
   if (!fullName || !phone || !email) {
@@ -26,14 +26,19 @@ export default async function handler(req, res) {
     },
     email_mkrvwb5m: {
       email: email,
-      text: fullName // Optional label shown in Monday UI
+      text: fullName
     }
   };
 
+  // ✅ Include the reason if it exists
+  if (reason) {
+    columnValues["long_text_mkrzeg3q"] = reason;
+  }
+
   // Convert columnValues into a safely escaped string
   const columnValuesStr = JSON.stringify(columnValues)
-    .replace(/\\/g, '\\\\')  // Escape backslashes
-    .replace(/"/g, '\\"');   // Escape double quotes
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"');
 
   // Construct GraphQL mutation query
   const query = `
@@ -53,23 +58,20 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: process.env.MONDAY_API_KEY // Must be set in your Vercel/ENV
+        Authorization: process.env.MONDAY_API_KEY
       },
       body: JSON.stringify({ query })
     });
 
     const data = await response.json();
 
-    // Check for API errors
     if (data.errors) {
       console.error('Monday API error:', JSON.stringify(data.errors, null, 2));
       return res.status(500).json({ message: 'Monday API error', errors: data.errors });
     }
 
-    // Success response
     return res.status(200).json({ message: 'Item created successfully', data });
   } catch (error) {
     console.error('Request failed:', error);
-    return res.status(500).json({ message: 'Internal server error', error: error.message });
-  }
-}
+    return res.status(500).json({ message: 'Internal serv
+
