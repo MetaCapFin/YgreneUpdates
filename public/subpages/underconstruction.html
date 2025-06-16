@@ -151,28 +151,31 @@
     }
 
     // ============ Attempt OpenAI call ==============
-    try {
-      const openaiRes = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput }),
-      });
-
-      const data = await openaiRes.json();
-
-      if (data?.reply) {
-        delayBotResponse(data.reply);
-        return;
-      } else {
-        throw new Error("No reply returned from OpenAI");
-      }
-    } catch (err) {
-      console.warn("OpenAI call failed, falling back:", err);
-
-      const fallback = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
-      delayBotResponse(fallback);
-      awaitingHelpConfirmation = true;
+   try {
+    const openaiRes = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [
+          { role: 'user', content: userInput }
+        ]
+      }),
+    });
+  
+    const data = await openaiRes.json();
+  
+    if (data?.reply) {
+      delayBotResponse(data.reply);
+      return;
+    } else {
+      throw new Error("No reply returned from OpenAI");
     }
+  } catch (err) {
+    console.warn("OpenAI call failed, falling back:", err);
+    const fallback = `I'm not sure I can answer that, ${userName}. Would you like me to help you schedule a call from our support team?`;
+    delayBotResponse(fallback);
+    awaitingHelpConfirmation = true;
+  }
   };
 </script>
 </body>
