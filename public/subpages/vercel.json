@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/underconstruction",
+      "destination": "/subpages/underconstruction.html"
+    }
+  ]
+}
+
