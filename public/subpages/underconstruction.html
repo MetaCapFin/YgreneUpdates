@@ -124,10 +124,19 @@
       const msg = document.createElement("div");
       msg.className = `chat-message ${sender}`;
       msg.innerText = text;
-      if (withFade) msg.classList.add("fade-in");
+    
+      if (withFade) {
+        if (sender === "user") {
+          msg.classList.add("slide-fade-in-user");
+        } else {
+          msg.classList.add("fade-in-bot");
+        }
+      }
+    
       messages.appendChild(msg);
       messages.scrollTop = messages.scrollHeight;
     };
+    ;
 
     const delayBotResponse = (text) => {
       setTimeout(() => appendMessage(text, "bot", true), 1000);
